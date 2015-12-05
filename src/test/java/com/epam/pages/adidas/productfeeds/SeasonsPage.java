@@ -24,6 +24,7 @@ public class SeasonsPage extends WelcomePage {
                 && btnEditSeason.isPresent();
     }
 
+
     @FindBy(id = "newSeason")
     protected Button btnNewSeason;
 

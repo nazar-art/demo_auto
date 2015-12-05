@@ -7,7 +7,6 @@ import com.epam.core.listeners.TestListener;
 import com.epam.core.logging.Logger;
 import com.epam.dp.BaseDP;
 import com.epam.model.dao.impl.DAOFactory;
-import com.epam.ta.reportportal.listeners.testng.ReportPortalTestNGListener;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @ContextConfiguration(locations = {"classpath:test-context.xml"})
-@Listeners({TestListener.class, ReportPortalTestNGListener.class})
+@Listeners({TestListener.class/*, ReportPortalTestNGListener.class*/})
 public class TestBase extends AbstractTestNGSpringContextTests {
 
     @Autowired
@@ -52,21 +51,21 @@ public class TestBase extends AbstractTestNGSpringContextTests {
             Driver.driver.init();
             driverName = Config.getProperty(Config.BROWSER);
             Logger.logDebug("Driver : " + Config.getProperty(Config.BROWSER));
-            Driver.driver.get().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+            Driver.getDefault().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
             if (!driverName.equalsIgnoreCase("ANDROIDHYBRID")) {
-                Driver.driver.get().manage().deleteAllCookies();
+                Driver.getDefault().manage().deleteAllCookies();
 
                 if (!driverName.equalsIgnoreCase("ANDROID")) {
-                    Driver.driver.get().manage().window().maximize();
+                    Driver.getDefault().manage().window().maximize();
                     // native screen size at Jenkins
-//					driver.get().manage().window().setSize(new Dimension(1040, 784));
+//					getDefault().manage().window().setSize(new Dimension(1040, 784));
 
                     Logger.logInfo(String.format("start height %s width %s",
-                            Driver.driver.get().manage().window().getSize().height,
-                            Driver.driver.get().manage().window().getSize().width));
+                            Driver.getDefault().manage().window().getSize().height,
+                            Driver.getDefault().manage().window().getSize().width));
                 }
-                Driver.driver.get().get(baseUrl);
+                Driver.getDefault().get(baseUrl);
             }
         } catch (TimeoutException e) {
             Logger.logEnvironment("Command Centre site is not available");
@@ -80,9 +79,9 @@ public class TestBase extends AbstractTestNGSpringContextTests {
         Logger.logDebug("Start AFTER CLASS");
         if (driverName.equalsIgnoreCase("ANDROIDHYBRID")) {
             Logger.logDebug("We are closing application");
-            if (Driver.driver.get() != null) {
+            if (Driver.getDefault() != null) {
                 try {
-                    Driver.driver.get().quit();
+                    Driver.getDefault().quit();
                 } catch (UnreachableBrowserException e) {
                     logger.debug("UnreachableBrowser on close");
                 } finally {
@@ -98,17 +97,17 @@ public class TestBase extends AbstractTestNGSpringContextTests {
 
     public void closeWindow() {
         Logger.logDebug("We need to close window");
-        if (Driver.driver.get() != null) {
+        if (Driver.getDefault() != null) {
             try {
-                Set<String> windowHandles = Driver.driver.get().getWindowHandles();
+                Set<String> windowHandles = Driver.getDefault().getWindowHandles();
                 if (windowHandles != null && !windowHandles.isEmpty()) {
                     if (windowHandles.size() == 1) {
-                        Driver.driver.get().quit();
+                        Driver.getDefault().quit();
                         return;
                     }
                     for (String windowId : windowHandles) {
-                        if (Driver.driver.get() != null) {
-                            Driver.driver.get().switchTo().window(windowId);
+                        if (Driver.getDefault() != null) {
+                            Driver.getDefault().switchTo().window(windowId);
                             closeBrowser();
                         } else {
                             Logger.logEnvironment("There is no window opened");
@@ -127,9 +126,9 @@ public class TestBase extends AbstractTestNGSpringContextTests {
         try {
             Logger.logDebug("We are closing window");
             if (driverName.equalsIgnoreCase("ANDROID")) {
-                Driver.driver.get().quit();
+                Driver.getDefault().quit();
             } else {
-                Driver.driver.get().close();
+                Driver.getDefault().close();
             }
         } catch (UnreachableBrowserException e) {
             logger.debug("UnreachableBrowser on close");

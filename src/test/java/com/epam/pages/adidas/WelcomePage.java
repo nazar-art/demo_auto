@@ -28,6 +28,7 @@ public class WelcomePage extends PageObject {
     }
 
 
+    // HEADER SECTION
     @FindBy(id = "new-feedback-button")
     protected NavigationLink linkFeedback;
 
