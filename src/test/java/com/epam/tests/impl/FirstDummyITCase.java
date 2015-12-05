@@ -6,7 +6,7 @@ import com.epam.tests.TestBase;
 import com.epam.model.dto.AdminDTO;
 import org.testng.annotations.Test;
 
-public class FirstDummyTestCase extends TestBase {
+public class FirstDummyITCase extends TestBase {
 
     @Test(dataProviderClass = AdminDP.class, dataProvider = "ValidateLogin")
     public void validateLoginAndPassFieldFormat(AdminDTO adminDTO) {
