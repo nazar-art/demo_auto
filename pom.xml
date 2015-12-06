@@ -351,12 +351,6 @@
                             <name>usedefaultlisteners</name>
                             <value>false</value>
                         </property>
-                        <!--<property>
-                            <name>listener</name>
-                            <value>
-                                com.epam.core.listeners.TestListener,org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter
-                            </value>
-                        </property>-->
                     </properties>
                     <systemProperties>
                         <org.uncommons.reportng.escape-output>false</org.uncommons.reportng.escape-output>
@@ -446,6 +440,9 @@
 
         <profile>
             <id>catalogue</id>
+            <properties>
+                <suite.pattern>**/CatalogueManagementITCase</suite.pattern>
+            </properties>
         </profile>
 
     </profiles>
