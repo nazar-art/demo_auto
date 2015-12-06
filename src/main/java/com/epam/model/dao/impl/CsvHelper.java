@@ -1,21 +1,24 @@
 package com.epam.model.dao.impl;
 
+import com.epam.core.logging.Logger;
 import com.epam.model.dao.CsvMapping;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 import java.util.Map;
 
 public class CsvHelper {
+
+    // todo test this method before usage
     public static synchronized void fillObject(Object object, Map<String, String> map) {
-        for (Method method : object.getClass().getMethods()) {
-            if (method.getName().startsWith("set")) {
-                if (method.isAnnotationPresent(CsvMapping.class)) {
-                    try {
-                        method.invoke(object, map.get(method.getAnnotation(CsvMapping.class).header()));
-                    } catch (IllegalAccessException | InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
+        for (Field field : object.getClass().getDeclaredFields()) {
+            if (field.isAnnotationPresent(CsvMapping.class)) {
+                try {
+                    field.setAccessible(true);
+                    String value = map.get(field.getAnnotation(CsvMapping.class).header());
+
+                    field.set(object, value);
+                } catch (IllegalAccessException e) {
+                    Logger.logError(e.getMessage());
                 }
             }
         }

@@ -1,29 +1,18 @@
 package com.epam.model.dto;
 
 import com.epam.model.dao.XlsMapping;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-@ToString
+@Data
 public class AdminDTO {
 
-    private String testType;
-    private String login;
-    private String pass;
-
     @XlsMapping(header = "testType")
-    public void setTestType(String testType) {
-        this.testType = testType;
-    }
+    private String testType;
 
     @XlsMapping(header = "login")
-    public void setLogin(String login) {
-        this.login = login;
-    }
+    private String login;
 
     @XlsMapping(header = "pass")
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
+    private String pass;
+
 }

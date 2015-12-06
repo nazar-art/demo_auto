@@ -37,13 +37,15 @@ public final class XlsReader {
             if (sheetName == null || sheetName.isEmpty()) {
                 throw new IllegalArgumentException("Please, provide sheet name");
             }
+
             fis = new FileInputStream(fileName);
             XSSFWorkbook workBook = new XSSFWorkbook(fis);
             sheet = workBook.getSheet(sheetName);
             getMetaData();
+
             if (sheet == null) {
-                throw new IllegalArgumentException(MessageFormat.format(
-                        "Sheet is not found: {0}", sheetName));
+                throw new IllegalArgumentException(MessageFormat
+                        .format("Sheet is not found: {0}", sheetName));
             }
         } catch (IOException e) {
             Logger.logError(e.getMessage());
@@ -64,25 +66,21 @@ public final class XlsReader {
         if (!dataList.isEmpty()) {
             dataList.clear();
         }
+
         XSSFRow row;
         XSSFCell cell;
         Map<String, String> rowData;
+
         while ((rowIterator.hasNext())) {
             row = (XSSFRow) rowIterator.next();
             cell = row.getCell(0);
+
             if (cell != null
-                    && cell.getStringCellValue().trim()
-                    .equalsIgnoreCase(testId)) {
+                    && cell.getStringCellValue().trim().equalsIgnoreCase(testId)) {
+
                 rowData = new HashMap<String, String>();
 
-                for (int i = 0; i < row.getLastCellNum() - 1; i++) {
-                    cell = row.getCell(i);
-                    try {
-                        rowData.put(metaData.get(i), getCellValue(cell));
-                    } catch (NullPointerException e) {
-                        rowData.put(metaData.get(i), " ");
-                    }
-                }
+                rowData = processData(row, rowData);
                 dataList.add(rowData);
             }
         }
@@ -97,28 +95,37 @@ public final class XlsReader {
         if (!data.isEmpty()) {
             data.clear();
         }
+
         XSSFRow row;
         XSSFCell cell;
+
         while ((rowIterator.hasNext())) {
             row = (XSSFRow) rowIterator.next();
             cell = row.getCell(0);
+
             if (cell != null
-                    && cell.getStringCellValue().trim()
-                    .equalsIgnoreCase(testId)) {
-                for (int i = 0; i < row.getLastCellNum() - 1; i++) {
-                    cell = row.getCell(i);
-                    try {
-                        data.put(metaData.get(i), getCellValue(cell));
-                    } catch (NullPointerException e) {
-                        data.put(metaData.get(i), " ");
-                    }
-                }
+                    && cell.getStringCellValue().trim().equalsIgnoreCase(testId)) {
+
+                data = processData(row, data);
             }
         }
         if (data.isEmpty()) {
             throw new XlsDataNotFoundException("Data is not found by id: " + testId);
         }
         return data;
+    }
+
+    private Map<String, String> processData(XSSFRow row, Map<String, String> rowData) {
+        XSSFCell cell;
+        for (int i = 0; i < row.getLastCellNum() - 1; i++) {
+            cell = row.getCell(i);
+            try {
+                rowData.put(metaData.get(i), getCellValue(cell));
+            } catch (NullPointerException e) {
+                rowData.put(metaData.get(i), " ");
+            }
+        }
+        return rowData;
     }
 
     private String getCellValue(XSSFCell cell) {

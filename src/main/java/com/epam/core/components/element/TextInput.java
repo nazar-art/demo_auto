@@ -29,8 +29,9 @@ public class TextInput extends AbstractPageElement {
             wrappedElement.clear();
             if (text != null && !text.isEmpty()) {
                 wrappedElement.sendKeys(text);
+                Logger.logInfo(Localization
+                        .getMessage(Localization.INPUT_SET_VALUE, String.join(text, "[", "]"), name, page));
             }
-            Logger.logInfo(Localization.getMessage(Localization.INPUT_SET_VALUE, String.join(text, "[", "]"), name, page));
         } else {
             Logger.logError(Localization.getMessage(Localization.NO_INPUT, name, page));
         }
