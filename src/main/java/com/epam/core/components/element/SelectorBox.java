@@ -1,6 +1,8 @@
 package com.epam.core.components.element;
 
 import com.epam.core.components.AbstractPageElement;
+import com.epam.core.localization.Localization;
+import com.epam.core.logging.Logger;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -81,7 +83,14 @@ public class SelectorBox extends AbstractPageElement {
      * @param text The visible text to match against
      */
     public void selectByVisibleText(String text) {
-        getSelect().selectByVisibleText(text);
+        if (wrappedElement != null) {
+            highlightElement();
+
+            getSelect().selectByVisibleText(text);
+            Logger.logInfo(Localization.getMessage(Localization.SELECT_VALUE, text, name, page));
+        } else {
+            Logger.logError(Localization.getMessage(Localization.NO_SELECT, name, page));
+        }
     }
 
     /**
@@ -91,7 +100,12 @@ public class SelectorBox extends AbstractPageElement {
      * @param index The option at this index will be selected
      */
     public void selectByIndex(int index) {
-        getSelect().selectByIndex(index);
+        if (wrappedElement != null) {
+            highlightElement();
+            getSelect().selectByIndex(index);
+            Logger.logInfo(Localization
+                    .getMessage(Localization.SELECT_VALUE, String.valueOf(index), name, page));
+        }
     }
 
     /**
@@ -161,14 +175,12 @@ public class SelectorBox extends AbstractPageElement {
             try {
                 select.selectByIndex(index);
                 value = select.getFirstSelectedOption().getText();
-                Logger.logInfo(Localization.getMessage(
-                        Localization.SELECT_RANDOM, value, name, page));
+                Logger.logInfo(Localization.getMessage(Localization.SELECT_RANDOM, value, name, page));
             } catch (Exception e) {
                 // log
             }
         } else {
-            Logger.logError(Localization.getMessage(Localization.NO_SELECT,
-                    name, page));
+            Logger.logError(Localization.getMessage(Localization.NO_SELECT, name, page));
         }
     }
 
@@ -195,8 +207,7 @@ public class SelectorBox extends AbstractPageElement {
                     if (optionText.contains(valueToSelect)
                             || optionText.equalsIgnoreCase(valueToSelect)) {
                         option.click();
-                        Logger.logInfo(Localization.getMessage(
-                                Localization.SELECT_VALUE, valueToSelect, name,
+                        Logger.logInfo(Localization.getMessage(Localization.SELECT_VALUE, valueToSelect, name,
                                 page));
                         selected = true;
                         break;
@@ -212,13 +223,11 @@ public class SelectorBox extends AbstractPageElement {
             }
 
             if (!selected) {
-                Logger.logError(Localization.getMessage(
-                        Localization.SELECT_DATA_WRONG, valueToSelect, name,
+                Logger.logError(Localization.getMessage(Localization.SELECT_DATA_WRONG, valueToSelect, name,
                         page));
             }
         } else {
-            Logger.logError(Localization
-                    .getMessage(Localization.NO_SELECT, name, page));
+            Logger.logError(Localization.getMessage(Localization.NO_SELECT, name, page));
         }
     }
 
@@ -247,12 +256,10 @@ public class SelectorBox extends AbstractPageElement {
             highlightElement();
             Select select = new Select(wrappedElement);
             String value = select.getFirstSelectedOption().getText();
-            Logger.logInfo(Localization.getMessage(
-                    Localization.SELECT_GET_TEXT, value, name, page));
+            Logger.logInfo(Localization.getMessage( Localization.SELECT_GET_TEXT, value, name, page));
             return value;
         } else {
-            Logger.logError(Localization.getMessage(Localization.NO_SELECT,
-                    name, page));
+            Logger.logError(Localization.getMessage(Localization.NO_SELECT, name, page));
         }
         return null;
     }*/

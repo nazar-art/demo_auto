@@ -17,5 +17,8 @@ target/
 
 # Other
 LoggerScreenshots/
-*log*
+
 report/
+test-output/
+
+*log*

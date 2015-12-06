@@ -2,4 +2,4 @@
 
 #### For running tests use Maven command (at the project folder):
 
-    clean install -Pweb
+    clean install -Pall

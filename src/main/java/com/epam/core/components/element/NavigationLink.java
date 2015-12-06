@@ -26,26 +26,22 @@ public class NavigationLink extends AbstractPageElement {
 
                     clickByJs();
                     Logger.logInfo(Localization.getMessage(Localization.CLICK_BUTTON, name, page));
-                    Logger.logDebug("we passed to:" + Driver.driver.get().getCurrentUrl());
+                    Logger.logDebug("we passed to:" + Driver.getDefault().getCurrentUrl());
                     return;
                 }
 
                 wrappedElement.click();
-                Logger.logDebug("we passed to:" + Driver.driver.get().getCurrentUrl());
+                Logger.logDebug("we passed to:" + Driver.getDefault().getCurrentUrl());
                 Logger.logInfo(Localization.getMessage(Localization.CLICK_BUTTON, name, page));
 
             } else {
                 Logger.logError(Localization.getMessage(Localization.NO_BUTTON, name));
             }
-        } catch (MoveTargetOutOfBoundsException e) {
+        } catch (MoveTargetOutOfBoundsException | ElementNotVisibleException e) {
             clickByJs();
             Logger.logInfo(Localization.getMessage(Localization.CLICK_BUTTON, name, page));
-            Logger.logDebug("we passed to:" + Driver.driver.get().getCurrentUrl());
+            Logger.logDebug("we passed to:" + Driver.getDefault().getCurrentUrl());
 
-        } catch (ElementNotVisibleException e) {
-            clickByJs();
-            Logger.logInfo(Localization.getMessage(Localization.CLICK_BUTTON, name, page));
-            Logger.logDebug("we passed to:" + Driver.driver.get().getCurrentUrl());
         }
     }
 

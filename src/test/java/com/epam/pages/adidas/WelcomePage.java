@@ -54,7 +54,7 @@ public class WelcomePage extends PageObject {
     @FindBy(linkText = "Consumers")
     private NavigationLink linkToConsumersModule;
 
-    @FindBy(xpath = "//a[contains(text(), 'Seasons')]")
+    @FindBy(xpath = "id('submenu6')//a[contains(text(), 'Seasons')]")
     private NavigationLink linkToProductFeedsModuleSeasons;
 
 

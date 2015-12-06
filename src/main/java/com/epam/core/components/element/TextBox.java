@@ -13,15 +13,16 @@ public class TextBox extends AbstractPageElement {
 
     public String getText() {
         if (wrappedElement != null) {
-            // highlightElement();
+            highlightElement();
             String containerValue = wrappedElement.getText();
+
             Logger.logDebug(Localization
                     .getMessage(Localization.TEXT_CONTAINER_GET, containerValue, name, page));
 
             return containerValue;
         } else {
-            Logger.logError(Localization.getMessage(
-                    Localization.NO_TEXT_CONTAINER, name, page));
+            Logger.logError(Localization
+                    .getMessage(Localization.NO_TEXT_CONTAINER, name, page));
         }
         return null;
     }
