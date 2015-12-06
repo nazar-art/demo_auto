@@ -136,6 +136,31 @@
             <version>1.1.3</version>
         </dependency>
 
+        <!--REPORTING-->
+        <dependency>
+            <groupId>org.uncommons</groupId>
+            <artifactId>reportng</artifactId>
+            <version>1.1.4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.testng</groupId>
+                    <artifactId>testng</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!--UTILS-->
         <dependency>
             <groupId>commons-lang</groupId>
@@ -246,7 +271,7 @@
         </dependency>
 
         <!--REPORT PORTAL-->
-        <!--todo uncoment when RP will be ready for usage-->
+        <!--todo uncomment when RP will be ready for usage-->
         <!--<dependency>
             <groupId>com.epam.ta.reportportal</groupId>
             <artifactId>reportportal-client</artifactId>
@@ -319,6 +344,25 @@
                     <includes>
                         <include>${suite.pattern}</include>
                     </includes>
+
+                    <properties>
+                        <property>
+                            <name>usedefaultlisteners</name>
+                            <value>false</value>
+                        </property>
+                        <!--<property>
+                            <name>listener</name>
+                            <value>
+                                com.epam.core.listeners.TestListener,org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter
+                            </value>
+                        </property>-->
+                    </properties>
+                    <systemProperties>
+                        <org.uncommons.reportng.escape-output>false</org.uncommons.reportng.escape-output>
+                    </systemProperties>
+
+                    <workingDirectory>./</workingDirectory>
+                    <reportsDirectory>./report</reportsDirectory>
                 </configuration>
 
                 <executions>

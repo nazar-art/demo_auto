@@ -21,7 +21,8 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @ContextConfiguration(locations = {"classpath:test-context.xml"})
-@Listeners({TestListener.class/*, ReportPortalTestNGListener.class*/})
+@Listeners({TestListener.class, org.uncommons.reportng.HTMLReporter.class,
+        org.uncommons.reportng.JUnitXMLReporter.class /*, ReportPortalTestNGListener.class*/})
 public class TestBase extends AbstractTestNGSpringContextTests {
 
     @Autowired

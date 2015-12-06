@@ -45,4 +45,14 @@ public class AdminDTO {
         this.field = field;
     }
 
+
+    @Override
+    public String toString() {
+        return "AdminDTO{" +
+                "testType='" + testType + '\'' +
+                ", login='" + login + '\'' +
+                ", pass='" + pass + '\'' +
+                ", field='" + field + '\'' +
+                '}';
+    }
 }
