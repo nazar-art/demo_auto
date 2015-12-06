@@ -21,4 +21,4 @@ LoggerScreenshots/
 report/
 test-output/
 
-*log*
+*log*.txt
