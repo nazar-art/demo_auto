@@ -5,7 +5,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 
-public class XslReport {
+public final class XslReport {
 
     private XslReport() {
 

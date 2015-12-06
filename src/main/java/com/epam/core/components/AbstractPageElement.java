@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AbstractPageElement extends AbstractSearchContext<WebElement> implements IPageElement {
 
-    protected RemoteWebDriver driver = Driver.driver.get();
+    protected RemoteWebDriver driver = Driver.getDefault();
     protected final WebElement wrappedElement;
     protected final String name;
     protected final String page;
@@ -43,7 +43,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
 
     public static WebElement getFromCalendar(String date, String index) {
         try {
-            WebElement myElement = Driver.driver.get().findElementByXPath(
+            WebElement myElement = Driver.getDefault().findElementByXPath(
                     "(//td[contains(text(),'" + date + "')])[" + index + "]");
             if (myElement.isDisplayed()) {
                 Logger.logInfo("PageElement " + date + " is displayed");
@@ -59,23 +59,23 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
 
     public static boolean clickIfExistInCalendar(String date, String index) {
         try {
-            Driver.driver.get().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-            WebElement myElement = Driver.driver.get().findElementByXPath(
+            Driver.getDefault().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+            WebElement myElement = Driver.getDefault().findElementByXPath(
                     "(//td[contains(text(),'" + date + "')])[" + index + "]");
             if (myElement.getAttribute("class").contains("dp_caption")) {
-                myElement = Driver.driver.get().findElementByXPath(
+                myElement = Driver.getDefault().findElementByXPath(
                         "(//td[contains(text(),'" + date + "')])["
                                 + (new Integer(index) + 1) + "]");
             }
             if (myElement.isDisplayed()) {
                 Logger.logInfo("PageElement " + date + " is displayed");
                 try {
-                    WebDriverWait wait = new WebDriverWait(Driver.driver.get(),
+                    WebDriverWait wait = new WebDriverWait(Driver.getDefault(),
                             1);
                     wait.until(ExpectedConditions.visibilityOf(myElement));
                     Logger.logInfo("PageElement " + date + " click");
                     // myElement.click();(20)
-                    Driver.driver.get().executeScript(
+                    Driver.getDefault().executeScript(
                             "$(arguments[0]).click();", myElement);
                     return true;
                 } catch (Exception e) {
@@ -87,7 +87,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
             Logger.logInfo("PageElement " + date + " not displayed");
             return false;
         } finally {
-            Driver.driver.get().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+            Driver.getDefault().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         }
 
         return false;
@@ -98,7 +98,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
         for (int row = 1; row < 8; row++) {
             for (int column = 1; column < 8; column++) {
                 try {
-                    Driver.driver.get().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+                    Driver.getDefault().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
                     List<WebElement> myElements = Driver.driver
                             .get()
                             .findElementsByXPath(
@@ -140,7 +140,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
                                 + "] is displayed");
                         try {
                             WebDriverWait wait = new WebDriverWait(
-                                    Driver.driver.get(), 1);
+                                    Driver.getDefault(), 1);
                             wait.until(ExpectedConditions
                                     .visibilityOf(myElement));
                             Logger.logInfo("PageElement " + day + " click");
@@ -177,8 +177,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
                             }
                             return true;
                         } catch (Exception e) {
-                            Logger.logDebug("visibilityOfElementWait "
-                                    + e.getMessage());
+                            Logger.logDebug("visibilityOfElementWait " + e.getMessage());
                         }
                     }
                 } catch (NoSuchElementException e) {
@@ -188,7 +187,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
                     // or we will be cycling here very long time
                     // and get this exception
                 } finally {
-                    Driver.driver.get().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                    Driver.getDefault().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 }
 
             }
@@ -217,7 +216,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
                         Logger.logInfo("PageElement " + day + " is displayed");
                         try {
                             WebDriverWait wait = new WebDriverWait(
-                                    Driver.driver.get(), 1);
+                                    Driver.getDefault(), 1);
                             wait.until(ExpectedConditions
                                     .visibilityOf(myElement));
                             Logger.logInfo("PageElement " + day + " click");
@@ -239,18 +238,18 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
     }
 
     public static RemoteWebDriver switchToIFrame(String frame) {
-        return (RemoteWebDriver) Driver.driver.get().switchTo().frame(frame);
+        return (RemoteWebDriver) Driver.getDefault().switchTo().frame(frame);
     }
 
     public static RemoteWebDriver switchToContent() {
-        return (RemoteWebDriver) Driver.driver.get().switchTo()
+        return (RemoteWebDriver) Driver.getDefault().switchTo()
                 .defaultContent();
     }
 
     public boolean visibilityOfElementWait() {
         if (wrappedElement != null) {
             try {
-                WebDriverWait wait = new WebDriverWait(Driver.driver.get(), 10);
+                WebDriverWait wait = new WebDriverWait(Driver.getDefault(), 10);
                 wait.until(ExpectedConditions.visibilityOf(wrappedElement));
                 return true;
             } catch (Exception e) {
@@ -267,7 +266,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
         if (wrappedElement != null) {
 
             try {
-                WebDriverWait wait = new WebDriverWait(Driver.driver.get(), 10);
+                WebDriverWait wait = new WebDriverWait(Driver.getDefault(), 10);
                 wait.until(new Function<WebDriver, Boolean>() {
                     public Boolean apply(WebDriver driver) {
                         String object = Driver.driver
@@ -296,7 +295,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
         if (wrappedElement != null) {
 
             try {
-                WebDriverWait wait = new WebDriverWait(Driver.driver.get(), 10);
+                WebDriverWait wait = new WebDriverWait(Driver.getDefault(), 10);
                 wait.until(new Function<WebDriver, Boolean>() {
                     public Boolean apply(WebDriver driver) {
                         String position1 = Driver.driver
@@ -352,8 +351,8 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
     public boolean visibilityOfElementWait(int seconds) {
         if (wrappedElement != null) {
             try {
-                Driver.driver.get().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-                WebDriverWait wait = new WebDriverWait(Driver.driver.get(),
+                Driver.getDefault().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+                WebDriverWait wait = new WebDriverWait(Driver.getDefault(),
                         seconds);
                 wait.until(ExpectedConditions.visibilityOf(wrappedElement));
                 return true;
@@ -361,7 +360,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
                 Logger.logDebug("visibilityOfElementWait " + e.getMessage());
                 return false;
             } finally {
-                Driver.driver.get().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                Driver.getDefault().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             }
 
         } else {

@@ -11,7 +11,7 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 
-public class XlsWriter {
+public final class XlsWriter {
 
     public void writeDataToExcelFile(String fileName, String sheetName,
                                      List<Map<String, String>> dataList) {

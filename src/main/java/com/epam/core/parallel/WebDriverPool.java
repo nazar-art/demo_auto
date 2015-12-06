@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class WebDriverPool extends ThreadLocal<RemoteWebDriver> {
+public final class WebDriverPool extends ThreadLocal<RemoteWebDriver> {
 
     private static AtomicInteger maxThreadCount = new AtomicInteger();
     private static AtomicInteger poolSize = new AtomicInteger();

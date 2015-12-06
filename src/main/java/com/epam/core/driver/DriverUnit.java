@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import static com.epam.core.driver.Driver.chromeService;
 import static com.epam.core.driver.Driver.driver;
 
-public class DriverUnit {
+public final class DriverUnit {
 
     public static void dragAndDrop(WebElement element, int x, int y) {
         String browserName = Config.getProperty(Config.BROWSER);

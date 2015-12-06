@@ -30,7 +30,7 @@ public class AbstractSearchContext<T extends SearchContext> {
         return context.findElement(By.cssSelector(cssLocator));
     }
 
-    protected WebElement findLink(String linkText) {
+    protected WebElement findByLink(String linkText) {
         return context.findElement(By.linkText(linkText));
     }
 

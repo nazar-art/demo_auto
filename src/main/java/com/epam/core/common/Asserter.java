@@ -7,7 +7,7 @@ import java.text.MessageFormat;
 
 import static org.testng.Assert.assertTrue;
 
-public class Asserter {
+public final class Asserter {
 
     private static final String messagePattern = "Verification was not successful, expected value: \"{0}\", but obtained \"{1}\"";
 

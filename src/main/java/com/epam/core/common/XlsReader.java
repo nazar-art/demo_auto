@@ -17,7 +17,7 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.*;
 
-public class XlsReader {
+public final class XlsReader {
 
     private XSSFSheet sheet;
     private Map<String, String> data = new HashMap<String, String>();

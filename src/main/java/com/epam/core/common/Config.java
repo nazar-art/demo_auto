@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class Config {
+public final class Config {
 
     public static Properties config;
     private static final String PROPERTY_FILE = "project.properties";

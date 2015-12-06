@@ -11,20 +11,18 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class Driver {
 
     public final static WebDriverPool driver = new WebDriverPool(Config.getIntProperty(Config.WD_THREAD_COUNT));
+
     public final static ThreadLocal<ChromeDriverService> chromeService = new ThreadLocal<ChromeDriverService>();
-//    public final static ThreadLocal<RemoteWebDriver> driver = new ThreadLocal<RemoteWebDriver>();
-//    public final static ThreadLocal<ChromeDriverService> chromeService = new ThreadLocal<ChromeDriverService>();
-
-    //	public static RemoteWebDriver driver;
-    public static void getUrl(String url) {
-        driver.get().get(url);
-    }
-
-    public static WebElement findElementById(String id) {
-        return driver.get().findElement(By.id(id));
-    }
 
     public static RemoteWebDriver getDefault() {
         return driver.get();
+    }
+
+    public static void getUrl(String url) {
+        getDefault().get(url);
+    }
+
+    public static WebElement findElementById(String id) {
+        return getDefault().findElement(By.id(id));
     }
 }
