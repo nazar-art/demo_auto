@@ -6,6 +6,7 @@ import com.epam.core.components.element.Button;
 import com.epam.core.components.element.Image;
 import com.epam.core.components.element.NavigationLink;
 import com.epam.pages.PageObject;
+import com.epam.pages.adidas.catalogue.CatalogueManagementPage;
 import com.epam.pages.adidas.productfeeds.SeasonsPage;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -38,6 +39,7 @@ public class WelcomePage extends PageObject {
     @FindBy(css = ".brand-logo")
     protected Image logoAdidas;
 
+
     // NAVIGATION BAR
     @FindBy(linkText = "Scheduling")
     private NavigationLink linkToScedulingModule;
@@ -64,6 +66,13 @@ public class WelcomePage extends PageObject {
     private NavigationLink linkToNewsPanelsModule;
 
 
+
+    public CatalogueManagementPage openCatalogueManagementModule() {
+        linkToCatalogueManagementModule.click();
+        CatalogueManagementPage ctlMngPage = new CatalogueManagementPage();
+        ctlMngPage.waitPageLoad();
+        return ctlMngPage;
+    }
 
     public NewsPanelsPage openNewsPanelsModule() {
         linkToNewsPanelsModule.click();

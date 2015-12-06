@@ -443,5 +443,10 @@
                 <host.for.test>https://qahint.crplatform.net/command-centre/auth</host.for.test>
             </properties>
         </profile>
+
+        <profile>
+            <id>catalogue</id>
+        </profile>
+
     </profiles>
 </project>
