@@ -24,7 +24,7 @@ public class CatalogueManagementPage extends WelcomePage {
     public boolean exist() {
         return btnAddNewCatalogue.isPresent()
                 && tblCatalogues.isPresent()
-                && checkBoxShowEspired.isPresent();
+                && checkBoxShowExpired.isPresent();
     }
 
     @FindBy(xpath = "id('container')//a[contains(text(), 'Add New Catalogue')]")
@@ -34,7 +34,11 @@ public class CatalogueManagementPage extends WelcomePage {
     protected Table tblCatalogues;
 
     @FindBy(xpath = "id('container')//span[contains(text(), 'Show expired')]")
-    protected CheckBox checkBoxShowEspired;
+    protected CheckBox checkBoxShowExpired;
 
 
+    public AddNewCataloguePage clickNewCatalogueBtn() {
+        btnAddNewCatalogue.click();
+        return new AddNewCataloguePage();
+    }
 }

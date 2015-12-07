@@ -10,10 +10,21 @@ public class CatalogueManagementITCase extends TestBase {
 
     @Test(dataProviderClass = CatalogueManagementDP.class,
             dataProvider = "ViewCatalogueManagementPage")
-    public void isCatalogueManagementPageExistTest(CatalogueManagementDTO managementDTO) throws Exception {
+    public void isCatalogueManagementPageOpenTest(CatalogueManagementDTO managementDTO) throws Exception {
         CatalogueManagementBO managementBO = new CatalogueManagementBO();
         asserter.assertFail(managementBO.isCatalogueManagementPageOpen(managementDTO),
                 "Fail: Catalogue Management page is not open.",
                 "Pass: Catalogue Management page is open.");
     }
+
+    @Test(dataProviderClass = CatalogueManagementDP.class,
+            dataProvider = "AddNewCatalogue")
+    public void addNewCatalogueTest(CatalogueManagementDTO managementDTO) throws Exception {
+        CatalogueManagementBO managementBO = new CatalogueManagementBO();
+        asserter.assertFail(managementBO.isCatalogueManagementPageOpen(managementDTO),
+                "Fail: Catalogue Management page is not open.",
+                "Pass: Catalogue Management page is open.");
+    }
+
+
 }
