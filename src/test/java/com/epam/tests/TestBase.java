@@ -6,7 +6,7 @@ import com.epam.core.driver.Driver;
 import com.epam.core.listeners.TestListener;
 import com.epam.core.logging.Logger;
 import com.epam.dp.BaseDP;
-import com.epam.model.dao.impl.DAOFactory;
+import com.epam.model.dao.modules.DAOFactory;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.springframework.beans.factory.annotation.Autowired;

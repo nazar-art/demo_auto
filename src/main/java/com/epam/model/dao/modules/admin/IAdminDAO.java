@@ -1,4 +1,4 @@
-package com.epam.model.dao.impl.admin;
+package com.epam.model.dao.modules.admin;
 
 
 import com.epam.model.dao.IDao;

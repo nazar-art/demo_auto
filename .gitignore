@@ -22,3 +22,4 @@ report/
 test-output/
 
 *log*.txt
+*~*.xlsx*

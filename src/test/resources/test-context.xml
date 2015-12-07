@@ -15,8 +15,11 @@
 
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 
-    <bean id="daoFactory" class="com.epam.model.dao.impl.DAOFactory"/>
+    <bean id="daoFactory" class="com.epam.model.dao.modules.DAOFactory"/>
 
-    <bean id="adminDao" class="com.epam.model.dao.impl.admin.impl.AdminDAO"/>
+    <bean id="adminDao" class="com.epam.model.dao.modules.admin.impl.AdminDAO"/>
+
+    <bean id="catalogueManagementDao"
+          class="com.epam.model.dao.modules.catalogue.impl.CatalogueManagementDAO" />
 
 </beans>

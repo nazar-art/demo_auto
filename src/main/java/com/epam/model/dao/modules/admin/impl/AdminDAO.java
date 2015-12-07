@@ -1,8 +1,8 @@
-package com.epam.model.dao.impl.admin.impl;
+package com.epam.model.dao.modules.admin.impl;
 
 import com.epam.core.common.XlsReader;
-import com.epam.model.dao.impl.XlsHelper;
-import com.epam.model.dao.impl.admin.IAdminDAO;
+import com.epam.model.dao.modules.XlsHelper;
+import com.epam.model.dao.modules.admin.IAdminDAO;
 import com.epam.model.dto.AdminDTO;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.epam.model.dao.impl;
+package com.epam.model.dao.modules;
 
 import com.epam.core.logging.Logger;
 import com.epam.model.dao.XlsMapping;
