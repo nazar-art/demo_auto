@@ -7,9 +7,9 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class SelectorBox extends AbstractPageElement {
+public class Selector extends AbstractPageElement {
 
-    public SelectorBox(WebElement wrappedElement, String name, String page) {
+    public Selector(WebElement wrappedElement, String name, String page) {
         super(wrappedElement, name, page);
     }
 
@@ -117,7 +117,13 @@ public class SelectorBox extends AbstractPageElement {
      * @param value The value to match against
      */
     public void selectByValue(String value) {
-        getSelect().selectByValue(value);
+        if (wrappedElement != null) {
+            highlightElement();
+            getSelect().selectByValue(value);
+            Logger.logInfo(Localization.getMessage(Localization.SELECT_VALUE, value, name, page));
+        } else {
+            Logger.logError(Localization.getMessage(Localization.NO_SELECT, name, page));
+        }
     }
 
     /**

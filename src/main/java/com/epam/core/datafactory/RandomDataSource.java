@@ -1,15 +1,26 @@
 package com.epam.core.datafactory;
 
 
-import com.epam.core.annotations.Data;
+import com.epam.core.annotations.GenerateData;
+import com.epam.core.logging.Logger;
 import org.fluttercode.datafactory.impl.DataFactory;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * usage of random generator:
+ *
+ * CatalogueManagementDTO userDTO = GeneratorDP.getCatalogueDTO();
+ * Logger.logInfo("HERE IS DESCRIPTION - " + userDTO.getDescription());
+ * <p>
+ * or explicitly:
+ *
+ * RandomDataSource randomDataSource = new RandomDataSource();
+ * randomDataSource.fillEntity(adminDTO);
+ */
 public class RandomDataSource {
 
     private DataFactory dataFactory = new DataFactory();
@@ -19,80 +30,70 @@ public class RandomDataSource {
 
     public void fillEntity(Object entity) {
         if (entity != null) {
-            for (Method method : entity.getClass().getMethods()) {
-                if (method.getName().startsWith("set")) {
-                    if (method.isAnnotationPresent(Data.class)) {
-                        Data data = method.getAnnotation(Data.class);
-                        try {
-                            switch (data.type()) {
-                                case NUMERIC:
-                                    method.invoke(entity,
-                                            getNumeric(data.min(), data.max()));
+            for (Field field : entity.getClass().getDeclaredFields()) {
+                if (field.isAnnotationPresent(GenerateData.class)) {
+                    GenerateData data = field.getAnnotation(GenerateData.class);
+                    field.setAccessible(true);
+
+                    try {
+                        switch (data.type()) {
+                            case NUMERIC:
+                                field.set(entity, getNumeric(data.min(), data.max()));
+                                break;
+                            case STRING:
+                                if (data.join() != null
+                                        && !data.join().isEmpty()) {
+
+                                    field.set(entity, join(data.join(), getString(data.min(), data.max())));
                                     break;
-                                case STRING:
-                                    if (data.join() != null
-                                            && !data.join().isEmpty()) {
-                                        method.invoke(
-                                                entity,
-                                                join(data.join(),
-                                                        getString(data.min(),
-                                                                data.max())));
-                                        break;
-                                    }
-                                    method.invoke(entity,
-                                            getString(data.min(), data.max()));
-                                    break;
-                                case ADDRESS:
-                                    method.invoke(entity, getAddress());
-                                    break;
-                                case NAME:
-                                    method.invoke(entity, getName());
-                                    break;
-                                case FIRST_NAME:
-                                    method.invoke(entity, getFirstName());
-                                    break;
-                                case LAST_NAME:
-                                    method.invoke(entity, getLastName());
-                                    break;
-                                case BIRTH_DATE:
-                                    method.invoke(entity, getBirthDate());
-                                    break;
-                                case BUSINESS_NAME:
-                                    method.invoke(entity, getBusinessName());
-                                    break;
-                                case EMAIL:
-                                    method.invoke(entity, getEmail());
-                                    break;
-                                case CITY:
-                                    method.invoke(entity, getCity());
-                                    break;
-                                case STREET:
-                                    method.invoke(entity, getStreet());
-                                    break;
-                                case TEXT:
-                                    method.invoke(entity,
-                                            getText(data.min(), data.max()));
-                                    break;
-                                case WORD:
-                                    method.invoke(entity,
-                                            getWord(data.min(), data.max()));
-                                    break;
-                                case CHARS:
-                                    method.invoke(entity,
-                                            getChars(data.min(), data.max()));
-                                    break;
-                                case BOOLEAN:
-                                    method.invoke(entity, getBoolean());
-                                    break;
-                                case GENDER:
-                                    method.invoke(entity, getGender());
-                                    break;
-                            }
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
+                                }
+                                field.set(entity, getString(data.min(), data.max()));
+                                break;
+                            case ADDRESS:
+                                field.set(entity, getAddress());
+                                break;
+                            case NAME:
+                                field.set(entity, getName());
+                                break;
+                            case FIRST_NAME:
+                                field.set(entity, getFirstName());
+                                break;
+                            case LAST_NAME:
+                                field.set(entity, getLastName());
+                                break;
+                            case BIRTH_DATE:
+                                field.set(entity, getBirthDate());
+                                break;
+                            case BUSINESS_NAME:
+                                field.set(entity, getBusinessName());
+                                break;
+                            case EMAIL:
+                                field.set(entity, getEmail());
+                                break;
+                            case CITY:
+                                field.set(entity, getCity());
+                                break;
+                            case STREET:
+                                field.set(entity, getStreet());
+                                break;
+                            case TEXT:
+                                field.set(entity, getText(data.min(), data.max()));
+                                break;
+                            case WORD:
+                                field.set(entity, getWord(data.min(), data.max()));
+                                break;
+                            case CHARS:
+                                field.set(entity, getChars(data.min(), data.max()));
+                                break;
+                            case BOOLEAN:
+                                field.set(entity, getBoolean());
+                                break;
+                            case GENDER:
+                                field.set(entity, getGender());
+                                break;
                         }
+                    } catch (IllegalAccessException e) {
+                        Logger.logError(e.getMessage());
                     }
                 }
             }

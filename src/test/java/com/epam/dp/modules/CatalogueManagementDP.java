@@ -19,5 +19,11 @@ public class CatalogueManagementDP {
         return DataProviderHelper.toListObject(testData);
     }
 
+    @DataProvider(parallel = true)
+    public static Iterator<Object[]> AddNewCatalogue() {
+        List<CatalogueManagementDTO> testData = catalogueDAO.findListById("AddNewCatalogue");
+        return DataProviderHelper.toListObject(testData);
+    }
+
 
 }

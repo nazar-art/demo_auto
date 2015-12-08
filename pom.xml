@@ -439,9 +439,16 @@
         </profile>
 
         <profile>
-            <id>catalogue</id>
+            <id>catalogues</id>
             <properties>
-                <suite.pattern>**/CatalogueManagementITCase</suite.pattern>
+                <suite.pattern>**/CatalogueManagementITCase.java</suite.pattern>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>dummy</id>
+            <properties>
+                <suite.pattern>**/FirstDummyITCase.java</suite.pattern>
             </properties>
         </profile>
 

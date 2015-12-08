@@ -9,8 +9,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Data {
+@Target(ElementType.FIELD)
+public @interface GenerateData {
 
     RandomType type();
 

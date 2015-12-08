@@ -11,15 +11,16 @@
 
     <context:annotation-config />
 
-    <!--<context:component-scan base-package="com.epam" />-->
-
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 
     <bean id="daoFactory" class="com.epam.model.dao.modules.DAOFactory"/>
 
-    <bean id="adminDao" class="com.epam.model.dao.modules.admin.impl.AdminDAO"/>
+    <bean id="dataGeneratorDao" class="com.epam.model.dao.generator.GeneratorDAO"/>
 
     <bean id="catalogueManagementDao"
-          class="com.epam.model.dao.modules.catalogue.impl.CatalogueManagementDAO" />
+          class="com.epam.model.dao.modules.catalogue.CatalogueManagementDAO" />
 
+
+    <!--todo remove later - this is test stub-->
+    <bean id="adminDao" class="com.epam.model.dao.modules.admin.AdminDAO"/>
 </beans>

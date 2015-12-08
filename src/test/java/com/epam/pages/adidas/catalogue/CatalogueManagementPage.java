@@ -41,4 +41,10 @@ public class CatalogueManagementPage extends WelcomePage {
         btnAddNewCatalogue.click();
         return new AddNewCataloguePage();
     }
+
+
+    public boolean verifyThatCatalogueIsNotCreated(String catalogueName) {
+        // todo looking at table
+        return false;
+    }
 }

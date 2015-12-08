@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public abstract class PageObject implements INavigationPage {
 
     protected Class<? extends PageObject> startPage = WelcomePage.class;
-    private RemoteWebDriver driver = Driver.driver.get();
+    private RemoteWebDriver driver = Driver.getDefault();
     private Map<Class<? extends PageObject>, Set<Class<? extends PageObject>>> siteMap = SiteMap.getSiteMap();
     public static Map<List<Class<? extends PageObject>>, AtomicInteger> pathReport = new HashMap<List<Class<? extends PageObject>>, AtomicInteger>();
     protected Map<Class<? extends PageObject>, Button> successor = null;

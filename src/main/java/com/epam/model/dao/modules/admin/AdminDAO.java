@@ -1,4 +1,4 @@
-package com.epam.model.dao.modules.admin.impl;
+package com.epam.model.dao.modules.admin;
 
 import com.epam.core.common.XlsReader;
 import com.epam.model.dao.modules.XlsHelper;

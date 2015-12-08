@@ -36,12 +36,12 @@ public final class DriverUnit {
     }
 
     public static void moveMouse(WebElement element) {
-        Actions act = new Actions(driver.get());
+        Actions act = new Actions(Driver.getDefault());
         act.moveToElement(element).build().perform();// click(element);
     }
 
     public static void clickMouse(WebElement element) {
-        Actions act = new Actions(driver.get());
+        Actions act = new Actions(Driver.getDefault());
         act.click(element).build().perform();
     }
 
@@ -49,7 +49,7 @@ public final class DriverUnit {
         Logger.logDebug("dragAndDropAndroid");
         String xto = Double.toString(x);
         String yto = Double.toString(y);
-        driver.get().executeScript(
+        Driver.getDefault().executeScript(
                 "function simulate(f,c,d,e){var b,a=null;for(b in eventMatchers)if(eventMatchers[b].test(c))"
                         + "{a=b;break}"
                         + "if(!a)return!1;"
@@ -63,7 +63,7 @@ public final class DriverUnit {
 
     public static boolean isDisplayed(By by) {
         try {
-            WebElement webElement = driver.get().findElement(by);
+            WebElement webElement = Driver.getDefault().findElement(by);
             if (webElement != null && webElement.isDisplayed()) {
                 return true;
             }
@@ -74,8 +74,8 @@ public final class DriverUnit {
     }
 
     public static void moveToAnotherTab() {
-        for (String winHandle : driver.get().getWindowHandles()) {
-            driver.get().switchTo().window(winHandle);
+        for (String winHandle : Driver.getDefault().getWindowHandles()) {
+            Driver.getDefault().switchTo().window(winHandle);
         }
     }
 
@@ -87,7 +87,7 @@ public final class DriverUnit {
 
     public static void openNewTab() {
         String openNewTabCombination = Keys.chord(Keys.CONTROL, "t");
-        driver.get().findElement(By.tagName("body")).sendKeys(openNewTabCombination);
+        Driver.getDefault().findElement(By.tagName("body")).sendKeys(openNewTabCombination);
     }
 
     public static void waitForSpecifiedTimeout(long intervalInMilliSec) {
@@ -100,23 +100,23 @@ public final class DriverUnit {
     }
 
     public static void switchFrame(WebElement frameLocator) {
-        Driver.driver.get().switchTo().frame(frameLocator);
+        Driver.getDefault().switchTo().frame(frameLocator);
     }
 
     public static void switchDefaultContent() {
-        Driver.driver.get().switchTo().defaultContent();
+        Driver.getDefault().switchTo().defaultContent();
     }
 
     public static void closeAnyWindowExcept(String windowNeed) {
 
-        if (driver.get() != null) {
+        if (Driver.getDefault() != null) {
             try {
-                Set<String> windowHandles = driver.get().getWindowHandles();
+                Set<String> windowHandles = Driver.getDefault().getWindowHandles();
                 if (windowHandles != null && !windowHandles.isEmpty()) {
                     if (windowHandles.size() >= 2) {
                         for (String windowId : windowHandles) {
-                            if (driver.get() != null) {
-                                driver.get().switchTo().window(windowId);
+                            if (Driver.getDefault() != null) {
+                                Driver.getDefault().switchTo().window(windowId);
                                 if (!windowId.equals(windowNeed)) {
                                     closeBrowser();
                                 }
@@ -131,7 +131,7 @@ public final class DriverUnit {
             } catch (UnreachableBrowserException e) {
                 e.printStackTrace();
             } finally {
-                driver.get().switchTo().window(windowNeed);
+                Driver.getDefault().switchTo().window(windowNeed);
             }
         }
     }
@@ -143,7 +143,7 @@ public final class DriverUnit {
                 chromeService.remove();
             } else {
                 Logger.logDebug("We are closing window");
-                driver.get().close();
+                Driver.getDefault().close();
             }
         } catch (UnreachableBrowserException e) {
             e.printStackTrace();

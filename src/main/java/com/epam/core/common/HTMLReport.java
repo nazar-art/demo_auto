@@ -10,23 +10,22 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-public class HTMLReport {
+public final class HTMLReport {
 
     public static void createThumbnail(File file, String fileName) {
         if (file == null || !file.exists()) {
             throw new IllegalArgumentException("Source file is not found");
         }
 
-        BufferedImage img = new BufferedImage(140, 140,
-                BufferedImage.TYPE_INT_RGB);
+        BufferedImage img = new BufferedImage(140, 140, BufferedImage.TYPE_INT_RGB);
 
         try {
-            img.createGraphics().drawImage(
-                    ImageIO.read(file).getScaledInstance(150, 150,
-                            Image.SCALE_SMOOTH), 0, 0, null);
-            ImageIO.write(img, "png", new File("LoggerScreenshots/" + fileName
-                    + "_thmb.png"));
+            img.createGraphics()
+                    .drawImage(ImageIO.read(file).getScaledInstance(150, 150, Image.SCALE_SMOOTH), 0, 0, null);
+
+            ImageIO.write(img, "png", new File("LoggerScreenshots/" + fileName + "_thmb.png"));
         } catch (IOException e) {
+
             Logger.logEnvironment(e.getMessage());
         }
     }

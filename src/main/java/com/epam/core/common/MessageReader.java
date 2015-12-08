@@ -49,7 +49,7 @@ public class MessageReader {
 
     public boolean waitForMailWithTopic(final String topic) {
         Logger.logInfo("Wait for message");
-        wait = new FluentWait<WebDriver>(Driver.driver.get())
+        wait = new FluentWait<WebDriver>(Driver.getDefault())
                 .withTimeout(120, TimeUnit.SECONDS)
                 .pollingEvery(2, TimeUnit.SECONDS)
                 .ignoring(TimeoutException.class);
@@ -151,7 +151,7 @@ public class MessageReader {
         final Date previousDate = cal.getTime();
 
         Logger.logInfo("Time the report was sent: " + getDate(previousDate));
-        wait = new FluentWait<WebDriver>(Driver.driver.get())
+        wait = new FluentWait<WebDriver>(Driver.getDefault())
                 .withTimeout(120, TimeUnit.SECONDS)
                 .pollingEvery(3, TimeUnit.SECONDS)
                 .ignoring(NoSuchElementException.class);

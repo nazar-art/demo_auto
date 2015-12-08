@@ -1,8 +1,7 @@
-package com.epam.model.dao.modules.catalogue.impl;
+package com.epam.model.dao.modules.catalogue;
 
 import com.epam.core.common.XlsReader;
 import com.epam.model.dao.modules.XlsHelper;
-import com.epam.model.dao.modules.catalogue.ICatalogueManagementDAO;
 import com.epam.model.dto.CatalogueManagementDTO;
 
 import java.util.ArrayList;

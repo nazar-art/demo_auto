@@ -22,7 +22,7 @@ public class SiteMap {
         siteMap = new HashMap<>();
         LinkedList<Class<? extends PageObject>> currentlyPages = new LinkedList<>();
         try {
-            Driver.driver.get().manage().timeouts().implicitlyWait(1, TimeUnit.MILLISECONDS);
+            Driver.getDefault().manage().timeouts().implicitlyWait(1, TimeUnit.MILLISECONDS);
             PageObject pageStartInst = pageStart.newInstance();
             siteMap.put(pageStart, pageStartInst.successor.keySet());
             currentlyPages.add(pageStart);
@@ -44,7 +44,7 @@ public class SiteMap {
         } catch (InstantiationException | IllegalAccessException e) {
             Logger.logError(e.getMessage());
         } finally {
-            Driver.driver.get().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            Driver.getDefault().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         }
         return siteMap;
     }
