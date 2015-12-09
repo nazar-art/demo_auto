@@ -16,4 +16,7 @@ public final class LogMarkers {
     public static final Marker MARKER_FAIL = MarkerFactory.getMarker("MARKER_FAIL");
     public static final Marker MARKER_ERROR = MarkerFactory.getMarker("MARKER_ERROR");
     public static final Marker MARKER_ENV = MarkerFactory.getMarker("MARKER_ENV");
+
+    private LogMarkers() {
+    }
 }

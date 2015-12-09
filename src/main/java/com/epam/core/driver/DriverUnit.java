@@ -19,6 +19,9 @@ import static com.epam.core.driver.Driver.driver;
 
 public final class DriverUnit {
 
+    private DriverUnit() {
+    }
+
     public static void dragAndDrop(WebElement element, int x, int y) {
         String browserName = Config.getProperty(Config.BROWSER);
 

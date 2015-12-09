@@ -198,7 +198,6 @@ public class MessageReader {
     }
 
     public boolean isMessageExistWithTopic(String topic) {
-
         try {
             Message message = getLastMessage();
             if (message.getSubject().contains(topic)) {

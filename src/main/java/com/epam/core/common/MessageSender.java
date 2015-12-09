@@ -14,11 +14,8 @@ import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
 public class MessageSender {
-    public static void sendReport()
-    //main(String args[])
 
-    {
-
+    public static void sendReport() {
         // Recipient's email ID needs to be mentioned.
         String to = "Olha_Lyashchenko@epam.com";
 

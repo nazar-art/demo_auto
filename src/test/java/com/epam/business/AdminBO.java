@@ -25,5 +25,6 @@ public class AdminBO {
         WelcomePage welcomePage = new WelcomePage();
         SeasonsPage seasonsPage = welcomePage.openProductFeedsModuleSeasons();
         return seasonsPage.exist();
+//        return false;
     }
 }

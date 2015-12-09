@@ -9,7 +9,7 @@ import org.testng.ITestResult;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class TestListener implements IInvokedMethodListener {
+public class TestListener implements IInvokedMethodListener {
 
     private static List<String> exceptions;
     private String currentMessage = "";

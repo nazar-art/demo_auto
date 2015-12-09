@@ -22,6 +22,9 @@ public final class Localization {
     public final static String INPUT_SET_VALUE = "input_set_value";
     public final static String NO_INPUT = "no_input";
 
+    private Localization() {
+    }
+
     private static void init() {
         currentLocale = new Locale("en");
         messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);

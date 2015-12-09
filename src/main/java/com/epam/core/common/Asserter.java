@@ -57,39 +57,32 @@ public final class Asserter {
         }
     }
 
-    public void assertFail(boolean condition, String failMessage,
-                           String passMessage) {
+    public void assertFail(boolean condition, String failMessage, String passMessage) {
         assertCondition(condition, failMessage, passMessage, ErrorLevel.FAIL);
 
     }
 
-    public void assertError(boolean condition, String failMessage,
-                            String passMessage) {
+    public void assertError(boolean condition, String failMessage, String passMessage) {
         assertCondition(condition, failMessage, passMessage, ErrorLevel.ERROR);
     }
 
-    public void assertPass(boolean condition, String failMessage,
-                           String passMessage) {
+    public void assertPass(boolean condition, String failMessage, String passMessage) {
         assertCondition(condition, failMessage, passMessage, ErrorLevel.PASS);
     }
 
-    public void assertInfo(boolean condition, String failMessage,
-                           String passMessage) {
+    public void assertInfo(boolean condition, String failMessage, String passMessage) {
         assertCondition(condition, failMessage, passMessage, ErrorLevel.INFO);
     }
 
-    public void assertWarning(boolean condition, String failMessage,
-                              String passMessage) {
+    public void assertWarning(boolean condition, String failMessage, String passMessage) {
         assertCondition(condition, failMessage, passMessage, ErrorLevel.WARNING);
     }
 
-    public void assertEnv(boolean condition, String failMessage,
-                          String passMessage) {
+    public void assertEnv(boolean condition, String failMessage, String passMessage) {
         assertCondition(condition, failMessage, passMessage, ErrorLevel.ENV);
     }
 
-    public void assertDebug(boolean condition, String failMessage,
-                            String passMessage) {
+    public void assertDebug(boolean condition, String failMessage, String passMessage) {
         assertCondition(condition, failMessage, passMessage, ErrorLevel.DEBUG);
     }
 

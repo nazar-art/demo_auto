@@ -22,6 +22,9 @@ public final class Config {
 
     public static final String WD_THREAD_COUNT = "wd.threadCount";
 
+    private Config() {
+    }
+
     public static int getIntProperty(String key) {
         return Integer.parseInt(getProperty(key));
     }

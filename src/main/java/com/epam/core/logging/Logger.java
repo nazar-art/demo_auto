@@ -18,6 +18,9 @@ public final class Logger {
     private static boolean isTest = false;
     private static boolean isHidden = false;
 
+    private Logger() {
+    }
+
     public enum LogLevel {
 
         INFO(1), PASS(2), WARNING(3), ENV(4), FAIL(5), ERROR(6);

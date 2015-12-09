@@ -47,10 +47,11 @@ public final class HTMLReport {
                 + ".css(\"left\",(e.pageX + yOffset) + \"px\");" + "});" + "};"
                 + "</script>");
         // Don't remove! It's for test on the local environment
-        // Reporter.log(MessageFormat.format("<a href=''../../LoggerScreenshots/{0}'' class=''preview''><img src=''../../LoggerScreenshots/{1}'' alt=''gallery thumbnail'' /></a>",
-        // path, path.split("\\.png")[0] + "_thmb.png"));
-        // Reporter.log(MessageFormat.format("<a href=''../../LoggerScreenshots/{0}''>Download Screenshot</a>",
-        // path));
+        Reporter.log(MessageFormat.format("<a href=''../../LoggerScreenshots/{0}'' class=''preview''><img src=''../../LoggerScreenshots/{1}'' alt=''gallery thumbnail'' /></a>",
+                path, path.split("\\.png")[0] + "_thmb.png"));
+        Reporter.log(MessageFormat.format("<a href=''../../LoggerScreenshots/{0}''>Download Screenshot</a>", path));
+        // END of test on the local environment
+
         Reporter.log(MessageFormat
                 .format("<a href=''{0}'' class=''preview''><img src=''{1}'' alt=''gallery thumbnail'' /></a>",
                         path, path.split("\\.png")[0] + "_thmb.png"));

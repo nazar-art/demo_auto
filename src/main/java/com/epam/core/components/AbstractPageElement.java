@@ -233,7 +233,8 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
     }
 
     public void highlightElement() {
-        if (!Config.getProperty("driver").equalsIgnoreCase("ANDROIDHYBRID")) {
+        if (!Config.getProperty(Config.BROWSER).equalsIgnoreCase("ANDROIDHYBRID")) {
+
             String bg = wrappedElement.getCssValue("backgroundColor");
 
             for (int i = 0; i < 3; i++) {

@@ -8,9 +8,9 @@ import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.io.File;
 
-import static com.epam.core.components.ElementUtils.existsInClasspath;
-import static com.epam.core.components.ElementUtils.getResourceFromClasspath;
-import static com.epam.core.components.ElementUtils.isOnRemoteWebDriver;
+import static com.epam.core.utils.ElementUtils.existsInClasspath;
+import static com.epam.core.utils.ElementUtils.getResourceFromClasspath;
+import static com.epam.core.utils.ElementUtils.isOnRemoteWebDriver;
 
 
 /**

@@ -2,12 +2,12 @@ package com.epam.pages.adidas.catalogue;
 
 import com.epam.core.annotations.Page;
 import com.epam.core.components.AbstractPageElement;
-import com.epam.core.components.ElementUtils;
 import com.epam.core.components.WebFieldDecorator;
 import com.epam.core.components.element.Button;
 import com.epam.core.components.element.Selector;
 import com.epam.core.components.element.TextInput;
 import com.epam.core.logging.Logger;
+import com.epam.core.utils.CalendarUtils;
 import com.epam.model.dto.CatalogueManagementDTO;
 import com.epam.pages.PageObject;
 import com.epam.pages.adidas.WelcomePage;
@@ -70,8 +70,8 @@ public class AddNewCataloguePage extends WelcomePage {
         setShortName(managementDTO);
         setLongName(managementDTO);
 
-        ElementUtils.setDate(inputIntroDate, introDate);
-        ElementUtils.setDate(inputExitDate, exitDate);
+        CalendarUtils.setDate(inputIntroDate, introDate);
+        CalendarUtils.setDate(inputExitDate, exitDate);
 
         setConfigurationSet(managementDTO);
         setDescription(managementDTO);

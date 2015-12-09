@@ -44,11 +44,12 @@ public final class XlsReader {
             getMetaData();
 
             if (sheet == null) {
-                throw new IllegalArgumentException(MessageFormat
-                        .format("Sheet is not found: {0}", sheetName));
+                throw new IllegalArgumentException(
+                        MessageFormat.format("Sheet is not found: {0}", sheetName));
             }
         } catch (IOException e) {
             Logger.logError(e.getMessage());
+
         } finally {
             if (fis != null) {
                 try {
@@ -132,6 +133,7 @@ public final class XlsReader {
         switch (cell.getCellType()) {
             case Cell.CELL_TYPE_STRING:
                 return cell.getStringCellValue();
+
             case Cell.CELL_TYPE_NUMERIC:
                 return String.valueOf(cell.getNumericCellValue());
         }
@@ -144,6 +146,7 @@ public final class XlsReader {
         }
         XSSFRow row = sheet.getRow(1);
         Iterator<Cell> cellIterator = row.cellIterator();
+
         while (cellIterator.hasNext()) {
             metaData.add(cellIterator.next().toString());
         }

@@ -13,10 +13,10 @@ import java.util.Map;
 
 public final class XlsWriter {
 
-    public void writeDataToExcelFile(String fileName, String sheetName,
-                                     List<Map<String, String>> dataList) {
+    public void writeDataToExcelFile(String fileName, String sheetName, List<Map<String, String>> dataList) {
         InputStream myxls;
         XSSFWorkbook wbr;
+
         try {
             File file = new File(fileName);
             myxls = new FileInputStream(file);
