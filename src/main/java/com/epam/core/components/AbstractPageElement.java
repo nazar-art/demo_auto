@@ -2,17 +2,18 @@ package com.epam.core.components;
 
 
 import com.epam.core.common.CommonTimeouts;
-import com.epam.core.common.Config;
 import com.epam.core.driver.Driver;
 import com.epam.core.logging.Logger;
+import com.epam.core.utils.ElementUtils;
 import com.google.common.base.Function;
 import lombok.Getter;
-import org.openqa.selenium.*;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.lang.reflect.Field;
@@ -46,21 +47,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
     }
 
     public boolean visibilityOfElementWait() {
-        Logger.logInfo("Wait for element visibility " + wrappedElement);
-
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(Driver.getDefault())
-                .withTimeout(CommonTimeouts.TIMEOUT_10_S.getSeconds(), TimeUnit.SECONDS)
-                .pollingEvery(CommonTimeouts.TIMEOUT_500_MS.getMilliSeconds(), TimeUnit.MILLISECONDS)
-                .ignoring(NoSuchElementException.class)
-                .ignoring(TimeoutException.class);
-        try {
-
-            wait.until(ExpectedConditions.visibilityOf(wrappedElement));
-            return true;
-        } catch (TimeoutException e) {
-            Logger.logError("timeout waiting for element visibility " + wrappedElement);
-            return false;
-        }
+        return ElementUtils.waitForActive(this.getWrappedElement());
 
         // old code
         /*if (wrappedElement != null) {
@@ -233,17 +220,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
     }
 
     public void highlightElement() {
-        if (!Config.getProperty(Config.BROWSER).equalsIgnoreCase("ANDROIDHYBRID")) {
-
-            String bg = wrappedElement.getCssValue("backgroundColor");
-
-            for (int i = 0; i < 3; i++) {
-                Driver.getDefault()
-                        .executeScript("arguments[0].style.backgroundColor = 'red'", wrappedElement);
-                Driver.getDefault()
-                        .executeScript("arguments[0].style.backgroundColor = '" + bg + "'", wrappedElement);
-            }
-        }
+        ElementUtils.highlightElement(this.getWrappedElement());
     }
 
     public void focusJs() {
@@ -289,8 +266,8 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
             e.printStackTrace();
         }
     }
-    
-    
+
+
     // OLD CALENDAR CODE
 
     @Deprecated

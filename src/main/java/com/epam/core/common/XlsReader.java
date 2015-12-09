@@ -17,7 +17,7 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.*;
 
-public final class XlsReader {
+public class XlsReader {
 
     private XSSFSheet sheet;
     private Map<String, String> data = new HashMap<String, String>();
@@ -44,8 +44,7 @@ public final class XlsReader {
             getMetaData();
 
             if (sheet == null) {
-                throw new IllegalArgumentException(
-                        MessageFormat.format("Sheet is not found: {0}", sheetName));
+                throw new IllegalArgumentException(MessageFormat.format("Sheet is not found: {0}", sheetName));
             }
         } catch (IOException e) {
             Logger.logError(e.getMessage());

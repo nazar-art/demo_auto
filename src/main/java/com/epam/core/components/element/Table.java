@@ -46,7 +46,10 @@ public class Table extends AbstractPageElement {
         return null;
     }
 
+    @Deprecated // does not working now
     public boolean selectCellByText(String text, int columnId) {
+        visibilityOfElementWait();
+
         List<WebElement> cells = getColumns().get(columnId);
 
         for (WebElement cell : cells) {
@@ -96,12 +99,14 @@ public class Table extends AbstractPageElement {
      * @return List where each item is a table row.
      */
     public List<List<WebElement>> getRows() {
+        Logger.logDebug("Search Rows");
         List<List<WebElement>> rows = new ArrayList<List<WebElement>>();
         List<WebElement> rowElements = getWrappedElement().findElements(By.xpath(".//tr"));
 
         for (WebElement rowElement : rowElements) {
             rows.add(rowElement.findElements(By.xpath(".//td")));
         }
+        Logger.logDebug("DONE: Rows size = " + rows.size());
         return rows;
     }
 
@@ -120,6 +125,7 @@ public class Table extends AbstractPageElement {
      * @return List where each item is a table column.
      */
     public List<List<WebElement>> getColumns() {
+        Logger.logDebug("Search Columns");
         List<List<WebElement>> columns = new ArrayList<List<WebElement>>();
         List<List<WebElement>> rows = getRows();
 
@@ -135,7 +141,7 @@ public class Table extends AbstractPageElement {
             }
             columns.add(column);
         }
-
+        Logger.logDebug("DONE: Columns size = " + columns);
         return columns;
     }
 

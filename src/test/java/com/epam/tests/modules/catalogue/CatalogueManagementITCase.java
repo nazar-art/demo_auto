@@ -19,9 +19,14 @@ public class CatalogueManagementITCase extends TestBase {
     @Test(dataProviderClass = CatalogueManagementDP.class, dataProvider = "AddNewCatalogue")
     public void addNewCatalogueTest(CatalogueManagementDTO managementDTO) throws Exception {
         CatalogueManagementBO managementBO = new CatalogueManagementBO();
-        asserter.assertFail(managementBO.isNewCatalogueAddedCanceled(managementDTO),
+        asserter.assertFail(managementBO.isNewCatalogueCanceled(managementDTO),
                 "Fail: New Catalogue is added.",
                 "Pass: New Catalogue is not added.");
+
+        asserter.assertFail(managementBO.isNewCatalogueAdded(managementDTO),
+                "Fail: New Catalogue is not added.",
+                "Pass: New Catalogue is added.");
+
 
     }
 

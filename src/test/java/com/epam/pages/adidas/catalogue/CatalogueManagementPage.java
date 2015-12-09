@@ -5,12 +5,17 @@ import com.epam.core.components.WebFieldDecorator;
 import com.epam.core.components.element.Button;
 import com.epam.core.components.element.CheckBox;
 import com.epam.core.components.element.Table;
+import com.epam.core.components.element.TextInput;
+import com.epam.core.driver.Driver;
+import com.epam.core.utils.ElementUtils;
 import com.epam.pages.PageObject;
 import com.epam.pages.adidas.WelcomePage;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Page(title = "CatalogueManagementPage")
 public class CatalogueManagementPage extends WelcomePage {
@@ -23,7 +28,7 @@ public class CatalogueManagementPage extends WelcomePage {
     @Override
     public boolean exist() {
         return btnAddNewCatalogue.isPresent()
-                && tblCatalogues.isPresent()
+                && tableCatalogues.isPresent()
                 && checkBoxShowExpired.isPresent();
     }
 
@@ -31,10 +36,17 @@ public class CatalogueManagementPage extends WelcomePage {
     protected Button btnAddNewCatalogue;
 
     @FindBy(id = "catalogue")
-    protected Table tblCatalogues;
+    protected Table tableCatalogues;
 
     @FindBy(xpath = "id('container')//span[contains(text(), 'Show expired')]")
     protected CheckBox checkBoxShowExpired;
+
+    @FindBy(id = "filter")
+    protected TextInput inputSearch;
+
+    @FindBy(css = ".btn-search")
+    protected Button btnSearch;
+
 
 
     public AddNewCataloguePage clickNewCatalogueBtn() {
@@ -43,8 +55,34 @@ public class CatalogueManagementPage extends WelcomePage {
     }
 
 
-    public boolean verifyThatCatalogueIsNotCreated(String catalogueName) {
-        // todo looking at table
-        return false;
+    public boolean verifyThatCatalogueIsNotCreated(String catalogueShortName) {
+        boolean result = false;
+        searchFilter(catalogueShortName);
+
+        WebElement notSearchResult = Driver
+                    .findByXpath("//span[contains(text(), 'Nothing to display for')]");
+
+            result = ElementUtils.waitForActive(notSearchResult);
+            if (notSearchResult.isDisplayed()) {
+                result = true;
+            }
+        return result;
+    }
+
+    public void searchFilter(String catalogueShortName) {
+        inputSearch.sendText(catalogueShortName);
+        btnSearch.click();
+    }
+
+    public boolean verifyThatCatalogueIsCreated(String catalogueShortName) {
+        searchFilter(catalogueShortName);
+        boolean result = false;
+
+        List<String> rows = tableCatalogues.getRowWithCellText(catalogueShortName);
+        if (rows.size() > 0) {
+            result = true;
+        }
+
+        return result;
     }
 }

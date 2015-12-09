@@ -10,21 +10,23 @@ import org.openqa.selenium.WebElement;
 
 public final class CalendarUtils {
 
+    public static final String DATE_FORMAT = "dd.MM.yyyy";
+
     private CalendarUtils() {
     }
 
     public static void setDate(TextInput textInput, String date) {
-        Logger.logInfo("Make visible following element: " + textInput.getName());
-//        textInput.highlightElement();
+        Logger.logInfo(String.format("Make visible following element: %s on page %s",
+                textInput.getName(), textInput.getPage()));
+
         WebElement element = textInput.getWrappedElement();
 
         String elementId = element.getAttribute("id");
         Logger.logDebug("element id: " + elementId);
 
         String allowInputScript = "$('#" + elementId + "').attr('readonly', false);";
-        String highlightElementScript = "arguments[0].style.backgroundColor = 'red';";
 
-        Driver.getDefault().executeScript(highlightElementScript, element);
+        ElementUtils.highlightElement(element);
         Driver.getDefault().executeScript(allowInputScript, element);
 
         element.sendKeys(date);

@@ -5,7 +5,11 @@ import com.epam.pages.adidas.LoginPage;
 import com.epam.pages.adidas.WelcomePage;
 import com.epam.pages.adidas.catalogue.CatalogueManagementPage;
 
+import java.time.format.DateTimeFormatter;
+
 public class BaseBO {
+
+    protected DateTimeFormatter formatter;
 
     protected WelcomePage login(CatalogueManagementDTO managementDTO) {
         LoginPage loginPage = new LoginPage();

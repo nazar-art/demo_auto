@@ -4,13 +4,16 @@ import com.epam.core.annotations.Page;
 import com.epam.core.components.AbstractPageElement;
 import com.epam.core.components.WebFieldDecorator;
 import com.epam.core.components.element.Button;
-import com.epam.core.components.element.Selector;
 import com.epam.core.components.element.TextInput;
+import com.epam.core.driver.Driver;
 import com.epam.core.logging.Logger;
 import com.epam.core.utils.CalendarUtils;
+import com.epam.core.utils.ElementUtils;
 import com.epam.model.dto.CatalogueManagementDTO;
 import com.epam.pages.PageObject;
 import com.epam.pages.adidas.WelcomePage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -52,15 +55,11 @@ public class AddNewCataloguePage extends WelcomePage {
     @FindBy(xpath = "id('catalogDetails')//th[@class='next']")
     private Button btnNextMonth;
 
-    // todo configure this element like submenu with list of items
-    @FindBy(css = ".dropdown-toggle.cms-configuration-toggle")
-    private Selector selectConfigurationSet;
-
     @FindBy(id = "description")
     private TextInput inputDescription;
 
     @FindBy(xpath = "id('catalogueDetailsForm')//a[contains(text(), 'Cancel')]")
-    private Button btnCacel;
+    private Button btnCancel;
 
     @FindBy(xpath = "id('catalogueDetailsForm')//button")
     private Button btnSave;
@@ -73,7 +72,7 @@ public class AddNewCataloguePage extends WelcomePage {
         CalendarUtils.setDate(inputIntroDate, introDate);
         CalendarUtils.setDate(inputExitDate, exitDate);
 
-        setConfigurationSet(managementDTO);
+        setConfigurationSet(managementDTO.getConfigurationSet());
         setDescription(managementDTO);
         return this;
     }
@@ -83,8 +82,13 @@ public class AddNewCataloguePage extends WelcomePage {
         return this;
     }
 
-    public AddNewCataloguePage setConfigurationSet(CatalogueManagementDTO managementDTO) {
-        selectConfigurationSet.deselectByVisibleText(managementDTO.getConfigurationSet());
+    public AddNewCataloguePage setConfigurationSet(String configuration) {
+        WebElement listParent = Driver.findByXpath("//div[@class='form-element-wrapper fix-for-qtip']");
+        listParent.click();
+
+        WebElement item = listParent.findElement(By.xpath("//a[contains(text(), '" + configuration + "')]"));
+        ElementUtils.highlightElement(item);
+        item.click();
         return this;
     }
 
@@ -99,13 +103,13 @@ public class AddNewCataloguePage extends WelcomePage {
     }
 
     public CatalogueManagementPage clickCancelButton() {
-        btnCacel.click();
+        btnCancel.click();
         return new CatalogueManagementPage();
     }
 
-    public CatalogueManagementPage clickSaveButton() {
+    public CatalogueViewPage clickSaveButton() {
         btnSave.click();
-        return new CatalogueManagementPage();
+        return new CatalogueViewPage();
     }
 
 

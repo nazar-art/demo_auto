@@ -29,8 +29,9 @@ public class NavigationLink extends AbstractPageElement {
                     Logger.logDebug("we passed to:" + Driver.getDefault().getCurrentUrl());
                     return;
                 }
-
+                highlightElement();
                 wrappedElement.click();
+
                 Logger.logDebug("we passed to:" + Driver.getDefault().getCurrentUrl());
                 Logger.logInfo(Localization.getMessage(Localization.CLICK_BUTTON, name, page));
 

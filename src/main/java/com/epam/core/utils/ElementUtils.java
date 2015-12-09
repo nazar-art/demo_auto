@@ -1,13 +1,24 @@
 package com.epam.core.utils;
 
+import com.epam.core.common.CommonTimeouts;
+import com.epam.core.common.Config;
+import com.epam.core.components.AbstractPageElement;
+import com.epam.core.driver.Driver;
 import com.epam.core.exceptions.HtmlElementsException;
+import com.epam.core.logging.Logger;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 public final class ElementUtils {
 
@@ -47,4 +58,44 @@ public final class ElementUtils {
         return element.getClass().equals(RemoteWebElement.class);
     }
 
+    public static void highlightElement(WebElement element) {
+        if (!Config.getProperty(Config.BROWSER).equalsIgnoreCase("ANDROIDHYBRID")) {
+
+            String bg = element.getCssValue("backgroundColor");
+
+            for (int i = 0; i < 4; i++) {
+                Driver.getDefault()
+                        .executeScript("arguments[0].style.backgroundColor = 'red'", element);
+                Driver.getDefault()
+                        .executeScript("arguments[0].style.backgroundColor = '" + bg + "'", element);
+            }
+
+//            String highlightElementScript = "arguments[0].style.backgroundColor = 'red';";
+//            Driver.getDefault().executeScript(highlightElementScript, element);
+        }
+    }
+
+    public static boolean waitForActive(WebElement element) {
+        if (element instanceof AbstractPageElement) {
+            AbstractPageElement absElement = (AbstractPageElement) element;
+            Logger.logInfo(String.format("Wait for element visibility %s on page %s",
+                    absElement.getName(), absElement.getPage()));
+        } else {
+            Logger.logInfo("Wait for element visibility " + element.getText());
+        }
+
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(Driver.getDefault())
+                .withTimeout(CommonTimeouts.TIMEOUT_10_S.getSeconds(), TimeUnit.SECONDS)
+                .pollingEvery(CommonTimeouts.TIMEOUT_500_MS.getMilliSeconds(), TimeUnit.MILLISECONDS)
+                .ignoring(NoSuchElementException.class)
+                .ignoring(TimeoutException.class);
+
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+            return true;
+        } catch (TimeoutException e) {
+            Logger.logError("timeout waiting for element visibility " + element);
+            return false;
+        }
+    }
 }

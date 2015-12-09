@@ -22,7 +22,18 @@ public class Driver {
         getDefault().get(url);
     }
 
-    public static WebElement findElementById(String id) {
+    public static WebElement findById(String id) {
         return getDefault().findElement(By.id(id));
     }
+
+    public static WebElement findByXpath(String xpathSelector) {
+//        Logger.logInfo("SEARCHING FOR XPATH: " + xpathSelector);
+        return getDefault().findElement(By.xpath(xpathSelector));
+    }
+
+    public static WebElement findByCss(String cssSelector) {
+        return getDefault().findElement(By.cssSelector(cssSelector));
+    }
+
+
 }
