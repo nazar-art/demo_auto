@@ -8,6 +8,8 @@ import com.epam.core.driver.Driver;
 import com.epam.core.driver.DriverUnit;
 import com.epam.core.exceptions.HtmlElementsException;
 import com.epam.core.logging.Logger;
+import com.epam.core.utils.ElementUtils;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -68,12 +70,32 @@ public class Table extends AbstractPageElement {
     }
 
     private void selectCell(WebElement cell) {
+        Logger.logDebug("Start selecting cell");
+        ElementUtils.highlightElement(cell);
+
         Actions builder = new Actions(Driver.getDefault());
         builder.moveToElement(cell).click(cell).build().perform();
         DriverUnit.waitForSpecifiedTimeout(CommonTimeouts.TIMEOUT_500_MS.getMilliSeconds());
     }
 
+    public boolean clickCellByTextInRow(String text) {
+        List<List<WebElement>> rows = getRows();
 
+        for (List<WebElement> row : rows) {
+            for (WebElement cell : row) {
+                if (cell.getText().contains(text)) {
+                    selectCell(cell);
+                    Logger.logInfo("Cell with text [" + text + "] was selected.");
+                    return true;
+                }
+            }
+        }
+        throw new RuntimeException("No items can be selected by name: " + text);
+    }
+
+
+
+    // MAIN METHODS
 
     /**
      * Returns table heading elements (contained in "th" tags).
@@ -102,11 +124,14 @@ public class Table extends AbstractPageElement {
         Logger.logDebug("Search Rows");
         List<List<WebElement>> rows = new ArrayList<List<WebElement>>();
         List<WebElement> rowElements = getWrappedElement().findElements(By.xpath(".//tr"));
+        Logger.logDebug("ROWS ELEMENTS INFO: " + ReflectionToStringBuilder.toString(rowElements));
 
         for (WebElement rowElement : rowElements) {
             rows.add(rowElement.findElements(By.xpath(".//td")));
+//             rows.add(rowElement.findElements(By.xpath(".//td/a"))); // every item is link
         }
         Logger.logDebug("DONE: Rows size = " + rows.size());
+        Logger.logDebug("ROWS INFO: " + ReflectionToStringBuilder.toString(rows));
         return rows;
     }
 

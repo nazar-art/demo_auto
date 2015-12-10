@@ -11,13 +11,13 @@ public class BaseBO {
 
     protected DateTimeFormatter formatter;
 
-    protected WelcomePage login(CatalogueManagementDTO managementDTO) {
+    public WelcomePage login(String login, String password) {
         LoginPage loginPage = new LoginPage();
-        return loginPage.login(managementDTO.getLogin(), managementDTO.getPass());
+        return loginPage.login(login, password);
     }
 
-    protected CatalogueManagementPage openCatalogueManagementPage(CatalogueManagementDTO managementDTO) {
-        WelcomePage welcomePage = login(managementDTO);
+    public CatalogueManagementPage openCatalogueManagementPage(CatalogueManagementDTO managementDTO) {
+        WelcomePage welcomePage = login(managementDTO.getLogin(), managementDTO.getPass());
         return welcomePage.openCatalogueManagementModule();
     }
 }

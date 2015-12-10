@@ -4,6 +4,7 @@ import com.epam.core.logging.Logger;
 import com.epam.core.utils.CalendarUtils;
 import com.epam.model.dto.CatalogueManagementDTO;
 import com.epam.pages.adidas.catalogue.CatalogueManagementPage;
+import com.epam.pages.adidas.catalogue.CatalogueViewPage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -50,10 +51,35 @@ public class CatalogueManagementBO extends BaseBO {
         Logger.logInfo("Intro date: " + formattedIntroDate);
         Logger.logInfo("Exit date: " + formattedExitDate);
 
-        return new CatalogueManagementPage().clickNewCatalogueBtn()
+        boolean catalogCreationResult = new CatalogueManagementPage().clickNewCatalogueBtn()
                 .fillNewCatalogueForm(managementDTO, formattedIntroDate, formattedExitDate)
                 .clickSaveButton()
+                .isCatalogReallyNew();
+
+        return catalogCreationResult
+                && new CatalogueViewPage()
                 .returnToCataloguesPage()
                 .verifyThatCatalogueIsCreated(managementDTO.getShortName());
+
+    }
+
+    public CatalogueManagementPage deleteCatalogue(String catalogueName) {
+        CatalogueManagementPage managementPage = new CatalogueManagementPage();
+        return managementPage
+                .viewCatalogueDetails(catalogueName)
+                .clickDeleteButton()
+                .clickConfirmDeletion();
+    }
+
+    public boolean isNewCatalogueDeleted(CatalogueManagementDTO dto) {
+        String catalogueName = dto.getShortName();
+        boolean result = false;
+
+        if (isNewCatalogueAdded(dto)) {
+            CatalogueManagementPage managementPage = deleteCatalogue(catalogueName);
+            result = managementPage.verifyThatCatalogueIsNotCreated(dto.getShortName());
+        }
+
+        return result;
     }
 }

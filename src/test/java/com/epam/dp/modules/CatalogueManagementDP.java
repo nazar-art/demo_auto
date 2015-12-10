@@ -25,5 +25,11 @@ public class CatalogueManagementDP {
         return DataProviderHelper.toListObject(testData);
     }
 
+    @DataProvider(parallel = true)
+    public static Object[][] DeleteCatalogue() {
+        List<CatalogueManagementDTO> testData = catalogueDAO.findListById("DeleteCatalogue");
+        return DataProviderHelper.toObject(testData);
+    }
+
 
 }

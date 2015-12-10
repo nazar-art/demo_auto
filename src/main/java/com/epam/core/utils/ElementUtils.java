@@ -75,12 +75,14 @@ public final class ElementUtils {
         }
     }
 
-    public static boolean waitForActive(WebElement element) {
+    public static boolean waitForReady(WebElement element) {
         if (element instanceof AbstractPageElement) {
             AbstractPageElement absElement = (AbstractPageElement) element;
-            Logger.logInfo(String.format("Wait for element visibility %s on page %s",
+
+            Logger.logInfo(String.format("Wait for an element visibility %s on page %s",
                     absElement.getName(), absElement.getPage()));
         } else {
+
             Logger.logInfo("Wait for element visibility " + element.getText());
         }
 
@@ -92,6 +94,7 @@ public final class ElementUtils {
 
         try {
             wait.until(ExpectedConditions.visibilityOf(element));
+            Logger.logInfo("DONE: Element is visible");
             return true;
         } catch (TimeoutException e) {
             Logger.logError("timeout waiting for element visibility " + element);

@@ -8,7 +8,6 @@ import com.epam.core.components.element.NavigationLink;
 import com.epam.core.driver.DriverUnit;
 import com.epam.pages.PageObject;
 import com.epam.pages.adidas.WelcomePage;
-import com.epam.pages.adidas.catalogue.tabs.SummaryTab;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -37,5 +36,36 @@ public class CatalogueViewPage extends WelcomePage {
         return new CatalogueManagementPage();
     }
 
-    protected SummaryTab summaryTab;
+    @FindBy(xpath = "//a[@title='Edit']")
+    protected Button btnEdit;
+
+    @FindBy(xpath = "//a[@title='Delete Catalogue']")
+    protected Button btnDelete;
+
+    @FindBy(xpath = "id('deleteCatalogueConfirmation')//a[contains(text(), 'Yes')]")
+    protected Button btnYes;
+
+    @FindBy(xpath = "id('deleteCatalogueConfirmation')//a[contains(text(), 'No')]")
+    protected Button btnNo;
+
+    public CatalogueManagementPage clickConfirmDeletion() {
+        if (btnYes.visibilityOfElementWait()) {
+            btnYes.click();
+        }
+        return new CatalogueManagementPage();
+    }
+
+    public CatalogueViewPage clickCancelDeletion() {
+        if (btnNo.visibilityOfElementWait()) {
+            btnNo.click();
+        }
+        return this;
+    }
+
+    public CatalogueViewPage clickDeleteButton() {
+        btnDelete.click();
+        return this;
+    }
+
+
 }

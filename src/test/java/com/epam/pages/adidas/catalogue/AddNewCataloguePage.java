@@ -1,26 +1,23 @@
 package com.epam.pages.adidas.catalogue;
 
 import com.epam.core.annotations.Page;
-import com.epam.core.components.AbstractPageElement;
 import com.epam.core.components.WebFieldDecorator;
 import com.epam.core.components.element.Button;
+import com.epam.core.components.element.TextBox;
 import com.epam.core.components.element.TextInput;
 import com.epam.core.driver.Driver;
-import com.epam.core.logging.Logger;
 import com.epam.core.utils.CalendarUtils;
 import com.epam.core.utils.ElementUtils;
 import com.epam.model.dto.CatalogueManagementDTO;
 import com.epam.pages.PageObject;
 import com.epam.pages.adidas.WelcomePage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.time.LocalDate;
-import java.time.format.TextStyle;
 import java.util.HashMap;
-import java.util.Locale;
 
 @Page(title = "AddNewCataloguePage")
 public class AddNewCataloguePage extends WelcomePage {
@@ -50,6 +47,11 @@ public class AddNewCataloguePage extends WelcomePage {
     @FindBy(id = "expDate")
     private TextInput inputExitDate;
 
+    /**
+     * Error messages:
+     */
+    @FindBy(id = "qtip-0-content")
+    protected TextBox errorTheSameCatalogueAlreadyExists;
 
 
     @FindBy(xpath = "id('catalogDetails')//th[@class='next']")
@@ -107,44 +109,20 @@ public class AddNewCataloguePage extends WelcomePage {
         return new CatalogueManagementPage();
     }
 
-    public CatalogueViewPage clickSaveButton() {
+    public AddNewCataloguePage clickSaveButton() {
         btnSave.click();
-        return new CatalogueViewPage();
+        return this;
     }
 
+    public boolean isCatalogReallyNew() {
+        boolean res = false;
 
-    @Deprecated
-    private void setDate(LocalDate introDate) {
-        String month = introDate.getMonth().getDisplayName(TextStyle.FULL, Locale.UK);
-        Logger.logInfo("MONTH: " + month);
-        if (AbstractPageElement.getFromCalendar(month, "1") == null
-                && AbstractPageElement.getFromCalendar(month, "2") == null) {
-            if (btnNextMonth.visibilityOfElementWait()) {
-                btnNextMonth.click();
-                Logger.logInfo("next month click ");
-            }
+        try {
+            errorTheSameCatalogueAlreadyExists.visibilityOfElementWait();
+        } catch (NoSuchElementException e) {
+            res = true;
         }
-        // dd.mm.yyyy
-        Logger.logInfo("Point 1 remove");
 
-        if (setCalendarDay(introDate)) {
-            Logger.logInfo("Day is set to: " + introDate);
-        } else {
-            btnNextMonth.click();
-
-            if (setCalendarDay(introDate)) {
-                Logger.logInfo("Day is set to: " + introDate);
-            }
-            Logger.logWarning("Day is not set to: " + introDate);
-        }
+        return res;
     }
-
-    @Deprecated
-    private boolean setCalendarDay(LocalDate date) { // 2015-09-01
-        int dayOfMonth = date.getDayOfMonth();
-        Logger.logDebug("DAY OF MONTH IS: " + dayOfMonth);
-        String day = String.valueOf(dayOfMonth);
-        return AbstractPageElement.clickIfExistInCalendar(day);
-    }
-
 }
