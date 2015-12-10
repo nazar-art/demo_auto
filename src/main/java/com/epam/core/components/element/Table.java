@@ -124,14 +124,13 @@ public class Table extends AbstractPageElement {
         Logger.logDebug("Search Rows");
         List<List<WebElement>> rows = new ArrayList<List<WebElement>>();
         List<WebElement> rowElements = getWrappedElement().findElements(By.xpath(".//tr"));
-        Logger.logDebug("ROWS ELEMENTS INFO: " + ReflectionToStringBuilder.toString(rowElements));
+//        Logger.logDebug("ROWS ELEMENTS INFO: " + ReflectionToStringBuilder.toString(rowElements));
 
         for (WebElement rowElement : rowElements) {
             rows.add(rowElement.findElements(By.xpath(".//td")));
-//             rows.add(rowElement.findElements(By.xpath(".//td/a"))); // every item is link
         }
         Logger.logDebug("DONE: Rows size = " + rows.size());
-        Logger.logDebug("ROWS INFO: " + ReflectionToStringBuilder.toString(rows));
+//        Logger.logDebug("ROWS INFO: " + ReflectionToStringBuilder.toString(rows));
         return rows;
     }
 
