@@ -72,6 +72,8 @@ public class CatalogueManagementBO extends BaseBO {
     }
 
     public boolean isNewCatalogueDeleted(CatalogueManagementDTO dto) {
+        openCatalogueManagementPage(dto);
+
         String catalogueName = dto.getShortName();
         boolean result = false;
 

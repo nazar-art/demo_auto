@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class CatalogueManagementITCase extends TestBase {
 
     @Test(dataProviderClass = CatalogueManagementDP.class, dataProvider = "ViewCatalogueManagementPage")
-    public void isCatalogueManagementPageOpenTest(CatalogueManagementDTO managementDTO) throws Exception {
+    public void testViewCatalogueManagementPage(CatalogueManagementDTO managementDTO) throws Exception {
         CatalogueManagementBO managementBO = new CatalogueManagementBO();
         asserter.assertFail(managementBO.isCatalogueManagementPageOpen(managementDTO),
                 "Fail: Catalogue Management page is not open.",
@@ -33,11 +33,8 @@ public class CatalogueManagementITCase extends TestBase {
     @Test(dataProviderClass = CatalogueManagementDP.class, dataProvider = "DeleteCatalogue")
     public void testDeleteCatalogue(CatalogueManagementDTO managementDTO) throws Exception {
         CatalogueManagementBO managementBO = new CatalogueManagementBO();
-
-        managementBO.openCatalogueManagementPage(managementDTO);
         asserter.assertFail(managementBO.isNewCatalogueDeleted(managementDTO),
                 "Fail: New Catalogue is not deleted.",
                 "Pass: New Catalogue is deleted.");
-
     }
 }
