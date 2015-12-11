@@ -1,6 +1,7 @@
 package com.epam.model.dao.modules.catalogue;
 
 import com.epam.core.common.XlsReader;
+import com.epam.core.datafactory.RandomDataSource;
 import com.epam.model.dao.modules.XlsHelper;
 import com.epam.model.dto.CatalogueManagementDTO;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 public class CatalogueManagementDAO implements ICatalogueManagementDAO {
 
     private XlsReader xls;
+    private RandomDataSource data = new RandomDataSource();
 
     @Override
     public CatalogueManagementDTO findById(String id) {
@@ -33,6 +35,8 @@ public class CatalogueManagementDAO implements ICatalogueManagementDAO {
             for (Map<String, String> dataItem : testData) {
                 CatalogueManagementDTO managementDTO = new CatalogueManagementDTO();
                 XlsHelper.fillObject(managementDTO, dataItem);
+                // fill with random generated data
+                data.fillEntity(managementDTO);
 
                 catalogueData.add(managementDTO);
             }

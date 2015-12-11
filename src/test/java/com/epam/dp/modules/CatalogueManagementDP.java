@@ -31,5 +31,4 @@ public class CatalogueManagementDP {
         return DataProviderHelper.toListObject(testData);
     }
 
-
 }

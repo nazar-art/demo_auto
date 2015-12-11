@@ -1,9 +1,10 @@
 package com.epam.core.datafactory;
 
 
-import com.epam.core.annotations.GenerateData;
+import com.epam.core.annotations.InjectRandomData;
 import com.epam.core.logging.Logger;
 import org.fluttercode.datafactory.impl.DataFactory;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -12,14 +13,28 @@ import java.util.Random;
 
 /**
  * usage of random generator:
- *
+ * <p>
  * CatalogueManagementDTO userDTO = GeneratorDP.getCatalogueDTO();
  * Logger.logInfo("HERE IS DESCRIPTION - " + userDTO.getDescription());
  * <p>
  * or explicitly:
- *
+ * <p>
  * RandomDataSource randomDataSource = new RandomDataSource();
  * randomDataSource.fillEntity(adminDTO);
+ * <p>
+ * The best usage is at filling dao with data:
+ * <p>
+ * public List<CatalogueManagementDTO> findListById(String id) {
+ * xls = new XlsReader("AdminInputData.xlsx", "CatalogueManagement");
+ * List<Map<String, String>> testData = xls.getDataListById(id);
+ * <p>
+ * if (testData != null && !testData.isEmpty()) {
+ * List<CatalogueManagementDTO> catalogueData = new ArrayList<CatalogueManagementDTO>();
+ * for (Map<String, String> dataItem : testData) {
+ * CatalogueManagementDTO managementDTO = new CatalogueManagementDTO();
+ * XlsHelper.fillObject(managementDTO, dataItem);
+ * <p>
+ * data.fillEntity(managementDTO);
  */
 public class RandomDataSource {
 
@@ -31,8 +46,8 @@ public class RandomDataSource {
     public void fillEntity(Object entity) {
         if (entity != null) {
             for (Field field : entity.getClass().getDeclaredFields()) {
-                if (field.isAnnotationPresent(GenerateData.class)) {
-                    GenerateData data = field.getAnnotation(GenerateData.class);
+                if (field.isAnnotationPresent(InjectRandomData.class)) {
+                    InjectRandomData data = field.getAnnotation(InjectRandomData.class);
                     field.setAccessible(true);
 
                     try {
@@ -68,7 +83,9 @@ public class RandomDataSource {
                                 field.set(entity, getBusinessName());
                                 break;
                             case EMAIL:
-                                field.set(entity, getEmail());
+//                                field.set(entity, getEmail());
+                                // check spring utilities
+                                ReflectionUtils.setField(field, entity, getEmail());
                                 break;
                             case CITY:
                                 field.set(entity, getCity());

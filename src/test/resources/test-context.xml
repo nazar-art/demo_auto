@@ -10,14 +10,14 @@
        profile="defaultTest">
 
     <context:annotation-config />
-
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 
+    <!--DAO LAYER-->
     <bean id="daoFactory" class="com.epam.model.dao.modules.DAOFactory"/>
 
-    <bean id="dataGeneratorDao" class="com.epam.model.dao.generator.GeneratorDAO"/>
+    <bean id="generatorDAO" class="com.epam.model.dao.generator.GeneratorDAO"/>
 
-    <bean id="catalogueManagementDao"
+    <bean id="catalogueManagementDAO"
           class="com.epam.model.dao.modules.catalogue.CatalogueManagementDAO" />
 
 

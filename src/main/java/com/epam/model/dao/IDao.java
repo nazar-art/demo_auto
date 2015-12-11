@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IDao<T> {
 
-    public T findById(String id);
+    T findById(String id);
 
-    public List<T> findListById(String id);
+    List<T> findListById(String id);
 }

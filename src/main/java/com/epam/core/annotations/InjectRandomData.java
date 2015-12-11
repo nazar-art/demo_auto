@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface GenerateData {
+public @interface InjectRandomData {
 
     RandomType type();
 

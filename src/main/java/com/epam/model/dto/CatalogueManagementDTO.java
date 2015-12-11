@@ -1,5 +1,7 @@
 package com.epam.model.dto;
 
+import com.epam.core.annotations.InjectRandomData;
+import com.epam.core.datafactory.RandomType;
 import com.epam.model.dao.XlsMapping;
 import lombok.Data;
 
@@ -24,8 +26,11 @@ public class CatalogueManagementDTO {
     @XlsMapping(header = "configurationSet")
     private String configurationSet;
 
-//    @GenerateData(type = RandomType.WORD, min = 6, max = 12)
     @XlsMapping(header = "description")
     private String description;
 
+
+    // check random generation
+    @InjectRandomData(type = RandomType.EMAIL)
+    private String email;
 }
