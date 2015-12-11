@@ -2,7 +2,6 @@ package com.epam.core.datafactory;
 
 
 import com.epam.core.annotations.InjectRandomData;
-import com.epam.core.logging.Logger;
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.springframework.util.ReflectionUtils;
 
@@ -47,70 +46,70 @@ public class RandomDataSource {
         if (entity != null) {
             for (Field field : entity.getClass().getDeclaredFields()) {
                 if (field.isAnnotationPresent(InjectRandomData.class)) {
+
                     InjectRandomData data = field.getAnnotation(InjectRandomData.class);
                     field.setAccessible(true);
 
-                    try {
-                        switch (data.type()) {
-                            case NUMERIC:
-                                field.set(entity, getNumeric(data.min(), data.max()));
-                                break;
-                            case STRING:
-                                if (data.join() != null
-                                        && !data.join().isEmpty()) {
+                    switch (data.type()) {
+                        case NUMERIC:
+                            ReflectionUtils
+                                    .setField(field, entity, getNumeric(data.min(), data.max()));
+                            break;
 
-                                    field.set(entity, join(data.join(), getString(data.min(), data.max())));
-                                    break;
-                                }
-                                field.set(entity, getString(data.min(), data.max()));
+                        case STRING:
+                            if (data.join() != null
+                                    && !data.join().isEmpty()) {
+
+                                ReflectionUtils
+                                        .setField(field, entity,
+                                                join(data.join(), getString(data.min(), data.max())));
                                 break;
-                            case ADDRESS:
-                                field.set(entity, getAddress());
-                                break;
-                            case NAME:
-                                field.set(entity, getName());
-                                break;
-                            case FIRST_NAME:
-                                field.set(entity, getFirstName());
-                                break;
-                            case LAST_NAME:
-                                field.set(entity, getLastName());
-                                break;
-                            case BIRTH_DATE:
-                                field.set(entity, getBirthDate());
-                                break;
-                            case BUSINESS_NAME:
-                                field.set(entity, getBusinessName());
-                                break;
-                            case EMAIL:
-//                                field.set(entity, getEmail());
-                                // check spring utilities
-                                ReflectionUtils.setField(field, entity, getEmail());
-                                break;
-                            case CITY:
-                                field.set(entity, getCity());
-                                break;
-                            case STREET:
-                                field.set(entity, getStreet());
-                                break;
-                            case TEXT:
-                                field.set(entity, getText(data.min(), data.max()));
-                                break;
-                            case WORD:
-                                field.set(entity, getWord(data.min(), data.max()));
-                                break;
-                            case CHARS:
-                                field.set(entity, getChars(data.min(), data.max()));
-                                break;
-                            case BOOLEAN:
-                                field.set(entity, getBoolean());
-                                break;
-                            case GENDER:
-                                field.set(entity, getGender());
-                                break;
-                        }
-                    } catch (IllegalAccessException e) {
-                        Logger.logError(e.getMessage());
+                            }
+                            ReflectionUtils.setField(field, entity, getString(data.min(), data.max()));
+                            break;
+
+                        case ADDRESS:
+                            ReflectionUtils.setField(field, entity, getAddress());
+                            break;
+                        case NAME:
+                            ReflectionUtils.setField(field, entity, getName());
+                            break;
+                        case FIRST_NAME:
+                            ReflectionUtils.setField(field, entity, getFirstName());
+                            break;
+                        case LAST_NAME:
+                            ReflectionUtils.setField(field, entity, getLastName());
+                            break;
+                        case BIRTH_DATE:
+                            ReflectionUtils.setField(field, entity, getBirthDate());
+                            break;
+                        case BUSINESS_NAME:
+                            ReflectionUtils.setField(field, entity, getBusinessName());
+                            break;
+                        case EMAIL:
+                            ReflectionUtils.setField(field, entity, getEmail());
+                            break;
+                        case CITY:
+                            ReflectionUtils.setField(field, entity, getCity());
+                            break;
+                        case STREET:
+                            ReflectionUtils.setField(field, entity, getStreet());
+                            break;
+                        case TEXT:
+                            ReflectionUtils.setField(field, entity, getText(data.min(), data.max()));
+                            break;
+                        case WORD:
+                            ReflectionUtils.setField(field, entity, getWord(data.min(), data.max()));
+                            break;
+                        case CHARS:
+                            ReflectionUtils.setField(field, entity, getChars(data.min(), data.max()));
+                            break;
+                        case BOOLEAN:
+                            ReflectionUtils.setField(field, entity, getBoolean());
+                            break;
+                        case GENDER:
+                            ReflectionUtils.setField(field, entity, getGender());
+                            break;
                     }
                 }
             }
