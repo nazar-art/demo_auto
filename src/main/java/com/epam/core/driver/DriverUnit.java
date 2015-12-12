@@ -110,6 +110,14 @@ public final class DriverUnit {
         Driver.getDefault().switchTo().defaultContent();
     }
 
+    public static RemoteWebDriver switchToIFrame(String frame) {
+        return (RemoteWebDriver) Driver.getDefault().switchTo().frame(frame);
+    }
+
+    public static RemoteWebDriver switchToContent() {
+        return (RemoteWebDriver) Driver.getDefault().switchTo().defaultContent();
+    }
+
     public static void closeAnyWindowExcept(String windowNeed) {
 
         if (Driver.getDefault() != null) {
