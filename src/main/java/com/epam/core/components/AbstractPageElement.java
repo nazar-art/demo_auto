@@ -91,7 +91,7 @@ public class AbstractPageElement extends AbstractSearchContext<WebElement> imple
     }
 
     public boolean visibilityOfElementWait() {
-        return ElementUtils.waitForReady(this.getWrappedElement());
+        return ElementUtils.waitForReady(this);
 
         // old code
         /*if (wrappedElement != null) {

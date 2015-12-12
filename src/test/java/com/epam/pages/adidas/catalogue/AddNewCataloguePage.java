@@ -6,6 +6,7 @@ import com.epam.core.components.element.Button;
 import com.epam.core.components.element.TextBox;
 import com.epam.core.components.element.TextInput;
 import com.epam.core.driver.Driver;
+import com.epam.core.logging.Logger;
 import com.epam.core.utils.CalendarUtils;
 import com.epam.core.utils.ElementUtils;
 import com.epam.model.dto.CatalogueManagementDTO;
@@ -13,6 +14,7 @@ import com.epam.pages.PageObject;
 import com.epam.pages.adidas.WelcomePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -115,14 +117,22 @@ public class AddNewCataloguePage extends WelcomePage {
     }
 
     public boolean isCatalogReallyNew() {
-        boolean res = false;
+        Logger.logDebug("Check if catalogue is really new");
+        boolean isCatalogNew = false;
 
         try {
-            errorTheSameCatalogueAlreadyExists.visibilityOfElementWait();
-        } catch (NoSuchElementException e) {
-            res = true;
+            if (!errorTheSameCatalogueAlreadyExists.visibilityOfElementWait()) {
+                Logger.logInfo("Catalogue is new and unique");
+                isCatalogNew = true;
+            } else {
+                Logger.logError("Duplicate of catalogue has already exists!! Please, create unique catalogue");
+            }
+        } catch (NoSuchElementException | TimeoutException e) {
+            Logger.logInfo("Catalogue is new and unique");
+            isCatalogNew = true;
         }
 
-        return res;
+        Logger.logDebug("DONE: Check if catalogue is really new");
+        return isCatalogNew;
     }
 }

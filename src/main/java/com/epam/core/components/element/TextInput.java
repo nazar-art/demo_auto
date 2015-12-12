@@ -45,7 +45,7 @@ public class TextInput extends AbstractPageElement {
         if (wrappedElement != null) {
             wrappedElement.clear();
             wrappedElement.click();
-            Logger.logDebug("Clear element");
+            Logger.logDebug(String.format("Clear input element \"%s\" on page \"%s\"", name, page));
         } else {
             Logger.logError(Localization.getMessage(Localization.NO_INPUT, name, page));
         }

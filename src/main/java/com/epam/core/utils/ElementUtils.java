@@ -76,15 +76,7 @@ public final class ElementUtils {
     }
 
     public static boolean waitForReady(WebElement element) {
-        if (element instanceof AbstractPageElement) {
-            AbstractPageElement absElement = (AbstractPageElement) element;
-
-            Logger.logInfo(String.format("Wait for an element visibility %s on page %s",
-                    absElement.getName(), absElement.getPage()));
-        } else {
-
-            Logger.logInfo("Wait for element visibility " + element.getText());
-        }
+        Logger.logInfo("Wait for element visibility " + element.getText());
 
         Wait<WebDriver> wait = new FluentWait<WebDriver>(Driver.getDefault())
                 .withTimeout(CommonTimeouts.TIMEOUT_10_S.getSeconds(), TimeUnit.SECONDS)
@@ -94,11 +86,34 @@ public final class ElementUtils {
 
         try {
             wait.until(ExpectedConditions.visibilityOf(element));
-            Logger.logInfo("DONE: Element is visible");
+            Logger.logInfo("DONE: Element is visible " + element.getAttribute("value"));
             return true;
         } catch (TimeoutException e) {
             Logger.logError("timeout waiting for element visibility " + element);
             return false;
         }
     }
+
+    public static boolean waitForReady(AbstractPageElement pageElement) {
+        Logger.logInfo(String.format("Wait for an element visibility %s on page %s",
+                pageElement.getName(), pageElement.getPage()));
+
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(Driver.getDefault())
+                .withTimeout(CommonTimeouts.TIMEOUT_10_S.getSeconds(), TimeUnit.SECONDS)
+                .pollingEvery(CommonTimeouts.TIMEOUT_500_MS.getMilliSeconds(), TimeUnit.MILLISECONDS)
+                .ignoring(NoSuchElementException.class)
+                .ignoring(TimeoutException.class);
+
+        try {
+            wait.until(ExpectedConditions.visibilityOf(pageElement.getWrappedElement()));
+            Logger.logInfo("DONE: Element is visible " + pageElement.getName() + " on page " + pageElement.getPage());
+            return true;
+        } catch (TimeoutException e) {
+            Logger.logError("Timeout waiting for element visibility "
+                    + pageElement.getName() + " on page " + pageElement.getPage());
+            return false;
+        }
+    }
+
+
 }
