@@ -86,10 +86,10 @@ public final class ElementUtils {
 
         try {
             wait.until(ExpectedConditions.visibilityOf(element));
-            Logger.logInfo("DONE: Element is visible " + element.getAttribute("value"));
+            Logger.logInfo("DONE: Element is visible " + element.getText());
             return true;
         } catch (TimeoutException e) {
-            Logger.logError("timeout waiting for element visibility " + element);
+            Logger.logWarning("Timeout waiting for element visibility " + element.getText());
             return false;
         }
     }
@@ -106,11 +106,11 @@ public final class ElementUtils {
 
         try {
             wait.until(ExpectedConditions.visibilityOf(pageElement.getWrappedElement()));
-            Logger.logInfo("DONE: Element is visible " + pageElement.getName() + " on page " + pageElement.getPage());
+            Logger.logInfo("DONE: Element is visible " + pageElement.getName() + " on page " + pageElement.getPage() + " page");
             return true;
-        } catch (TimeoutException e) {
-            Logger.logError("Timeout waiting for element visibility "
-                    + pageElement.getName() + " on page " + pageElement.getPage());
+        } catch (TimeoutException e) { // todo replace below log with Location logging
+            Logger.logWarning("Timeout waiting for element visibility "
+                    + pageElement.getName() + " on page " + pageElement.getPage() + " page");
             return false;
         }
     }
