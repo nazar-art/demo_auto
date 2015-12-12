@@ -21,6 +21,7 @@ public class CatalogueManagementDAO implements ICatalogueManagementDAO {
 
         CatalogueManagementDTO managementDTO = new CatalogueManagementDTO();
         XlsHelper.fillObject(managementDTO, testData);
+        data.fillEntity(managementDTO);
 
         return managementDTO;
     }
@@ -35,7 +36,6 @@ public class CatalogueManagementDAO implements ICatalogueManagementDAO {
             for (Map<String, String> dataItem : testData) {
                 CatalogueManagementDTO managementDTO = new CatalogueManagementDTO();
                 XlsHelper.fillObject(managementDTO, dataItem);
-                // fill with random generated data
                 data.fillEntity(managementDTO);
 
                 catalogueData.add(managementDTO);

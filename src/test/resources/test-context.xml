@@ -15,12 +15,10 @@
     <!--DAO LAYER-->
     <bean id="daoFactory" class="com.epam.model.dao.modules.DAOFactory"/>
 
-    <bean id="generatorDAO" class="com.epam.model.dao.generator.GeneratorDAO"/>
-
     <bean id="catalogueManagementDAO"
           class="com.epam.model.dao.modules.catalogue.CatalogueManagementDAO" />
 
 
-    <!--todo remove later - this is test stub-->
+    <!--todo remove later - this is first test stub-->
     <bean id="adminDao" class="com.epam.model.dao.modules.admin.AdminDAO"/>
 </beans>

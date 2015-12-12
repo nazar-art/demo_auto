@@ -10,31 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * usage of random generator:
- * <p>
- * CatalogueManagementDTO userDTO = GeneratorDP.getCatalogueDTO();
- * Logger.logInfo("HERE IS DESCRIPTION - " + userDTO.getDescription());
- * <p>
- * or explicitly:
- * <p>
- * RandomDataSource randomDataSource = new RandomDataSource();
- * randomDataSource.fillEntity(adminDTO);
- * <p>
- * The best usage is at filling dao with data:
- * <p>
- * public List<CatalogueManagementDTO> findListById(String id) {
- * xls = new XlsReader("AdminInputData.xlsx", "CatalogueManagement");
- * List<Map<String, String>> testData = xls.getDataListById(id);
- * <p>
- * if (testData != null && !testData.isEmpty()) {
- * List<CatalogueManagementDTO> catalogueData = new ArrayList<CatalogueManagementDTO>();
- * for (Map<String, String> dataItem : testData) {
- * CatalogueManagementDTO managementDTO = new CatalogueManagementDTO();
- * XlsHelper.fillObject(managementDTO, dataItem);
- * <p>
- * data.fillEntity(managementDTO);
- */
 public class RandomDataSource {
 
     private DataFactory dataFactory = new DataFactory();
@@ -57,11 +32,9 @@ public class RandomDataSource {
                             break;
 
                         case STRING:
-                            if (data.join() != null
-                                    && !data.join().isEmpty()) {
+                            if (data.join() != null && !data.join().isEmpty()) {
 
-                                ReflectionUtils
-                                        .setField(field, entity,
+                                ReflectionUtils.setField(field, entity,
                                                 join(data.join(), getString(data.min(), data.max())));
                                 break;
                             }

@@ -149,10 +149,10 @@ public enum DriversEnum {
             System.setProperty("webdriver.ie.driver", ieFile.getAbsolutePath());
 
             DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
-           /* capabilities.setCapability(
+            capabilities.setCapability(
                     InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
                     true);
-            capabilities.setJavascriptEnabled(true);*/
+            capabilities.setJavascriptEnabled(true);
             capabilities.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
             capabilities.setCapability("nativeEvents", true);
             capabilities.setCapability("enablePersistentHover", true);

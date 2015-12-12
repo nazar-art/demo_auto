@@ -1,6 +1,5 @@
 package com.epam.model.dao.modules;
 
-import com.epam.model.dao.generator.IGeneratorDAO;
 import com.epam.model.dao.modules.admin.IAdminDAO;
 import com.epam.model.dao.modules.catalogue.ICatalogueManagementDAO;
 import lombok.Getter;
@@ -11,9 +10,6 @@ public class DAOFactory {
 
     @Autowired
     private IAdminDAO adminDAO;
-
-    @Autowired
-    private IGeneratorDAO generatorDAO;
 
     @Autowired
     private ICatalogueManagementDAO catalogueManagementDAO;
