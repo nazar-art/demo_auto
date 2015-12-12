@@ -27,7 +27,7 @@ public class CatalogueViewPage extends WelcomePage {
     }
 
 
-    @FindBy(linkText = "Catalogue List")
+    @FindBy(xpath = "id('container')//a[contains(text(), 'Catalogue List')]")
     protected NavigationLink linkReturnToCatalogues;
 
     public CatalogueManagementPage returnToCataloguesPage() {

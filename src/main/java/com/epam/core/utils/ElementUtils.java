@@ -6,6 +6,7 @@ import com.epam.core.components.AbstractPageElement;
 import com.epam.core.driver.Driver;
 import com.epam.core.exceptions.HtmlElementsException;
 import com.epam.core.logging.Logger;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -76,7 +77,7 @@ public final class ElementUtils {
     }
 
     public static boolean waitForReady(WebElement element) {
-        Logger.logInfo("Wait for element visibility " + element.getText());
+        Logger.logInfo("Wait for element visibility - " + ReflectionToStringBuilder.toString(element));
 
         Wait<WebDriver> wait = new FluentWait<WebDriver>(Driver.getDefault())
                 .withTimeout(CommonTimeouts.TIMEOUT_10_S.getSeconds(), TimeUnit.SECONDS)
@@ -86,10 +87,11 @@ public final class ElementUtils {
 
         try {
             wait.until(ExpectedConditions.visibilityOf(element));
-            Logger.logInfo("DONE: Element is visible " + element.getText());
+            Logger.logInfo("DONE: Element is visible - " + ReflectionToStringBuilder.toString(element));
             return true;
         } catch (TimeoutException e) {
-            Logger.logWarning("Timeout waiting for element visibility " + element.getText());
+            Logger.logWarning("Timeout waiting for element visibility - "
+                    + ReflectionToStringBuilder.toString(element));
             return false;
         }
     }
