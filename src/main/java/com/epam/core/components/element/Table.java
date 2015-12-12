@@ -9,7 +9,6 @@ import com.epam.core.driver.DriverUnit;
 import com.epam.core.exceptions.HtmlElementsException;
 import com.epam.core.logging.Logger;
 import com.epam.core.utils.ElementUtils;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -48,7 +47,7 @@ public class Table extends AbstractPageElement {
         return null;
     }
 
-    @Deprecated // does not working now
+    @Deprecated // does not work now
     public boolean selectCellByText(String text, int columnId) {
         visibilityOfElementWait();
 

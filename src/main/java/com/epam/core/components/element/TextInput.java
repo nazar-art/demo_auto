@@ -22,6 +22,7 @@ public class TextInput extends AbstractPageElement {
         if (wrappedElement != null) {
             highlightElement();
             wrappedElement.clear();
+
             if (text != null && !text.isEmpty()) {
                 wrappedElement.sendKeys(text);
                 Logger.logInfo(Localization

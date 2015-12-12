@@ -15,8 +15,7 @@ public class LocatingEasyWebListHandler implements InvocationHandler {
     private String name;
     private String pageName;
 
-    public LocatingEasyWebListHandler(
-            Class<? extends AbstractPageElement> type, ElementLocator locator,
+    public LocatingEasyWebListHandler(Class<? extends AbstractPageElement> type, ElementLocator locator,
             String name, String pageName) {
         this.locator = locator;
         this.type = type;
@@ -25,17 +24,15 @@ public class LocatingEasyWebListHandler implements InvocationHandler {
     }
 
 
-    public Object invoke(Object object, Method method, Object[] objects)
-            throws Throwable {
+    public Object invoke(Object object, Method method, Object[] objects) throws Throwable {
         List<WebElement> elements = locator.findElements();
+
         if (AbstractPageElement.class.isAssignableFrom(type)) {
             List<AbstractPageElement> frameworkElements = new ArrayList<AbstractPageElement>();
 
             for (WebElement element : elements) {
-
-                frameworkElements.add(type.getConstructor(WebElement.class,
-                        String.class, String.class).newInstance(element, name,
-                        pageName));
+                frameworkElements.add(type.getConstructor(WebElement.class, String.class, String.class)
+                        .newInstance(element, name, pageName));
             }
 
             return method.invoke(frameworkElements, objects);

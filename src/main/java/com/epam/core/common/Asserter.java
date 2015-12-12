@@ -30,12 +30,10 @@ public final class Asserter {
 
     public void assertEquals(Object actualObject, Object expectedObject,
                              String failMessage, String passMessage) {
-        assertEquals(actualObject, expectedObject, failMessage, passMessage,
-                ErrorLevel.FAIL);
+        assertEquals(actualObject, expectedObject, failMessage, passMessage, ErrorLevel.FAIL);
     }
 
-    public void assertCheckByNull(Object actualObject, String failMessage,
-                                  String passMessage) {
+    public void assertCheckByNull(Object actualObject, String failMessage, String passMessage) {
         boolean ifNull = (actualObject != null);
         assertCondition(ifNull, failMessage, passMessage, ErrorLevel.FAIL);
     }

@@ -17,6 +17,7 @@ public class TestListener implements IInvokedMethodListener {
     @Override
     public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
         String methodName = iTestResult.getMethod().getMethodName();
+
         if (methodName != null && !exceptionsList().contains(methodName)) {
             if (!currentMessage.equals("START TEST CASE: " + methodName)) {
                 currentMessage = "START TEST CASE: " + methodName;
@@ -29,6 +30,7 @@ public class TestListener implements IInvokedMethodListener {
     @Override
     public void afterInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
         String methodName = iTestResult.getMethod().getMethodName();
+
         if (methodName != null && !exceptionsList().contains(methodName)) {
             if (!currentMessage.equals("END TEST CASE: " + methodName)) {
                 currentMessage = "END TEST CASE: " + methodName;

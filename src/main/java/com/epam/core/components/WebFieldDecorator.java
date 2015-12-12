@@ -30,14 +30,12 @@ public class WebFieldDecorator extends DefaultFieldDecorator {
         if (field.getAnnotation(FindBy.class) != null) {
             if (AbstractPageElement.class.isAssignableFrom(field.getType())) {
                 try {
-
                     WebElement proxy = proxyForLocator(loader, locator);
-                    return clazz.getConstructor(WebElement.class, String.class,
-                            String.class).newInstance(proxy, getName(field),
-                            getPage(field));
+
+                    return clazz.getConstructor(WebElement.class, String.class, String.class)
+                            .newInstance(proxy, getName(field), getPage(field));
                 } catch (Exception e) {
-                    Logger.logError("WebElement can't be represented as "
-                            + clazz);
+                    Logger.logError("WebElement can't be represented as " + clazz);
                     return null;
                 }
             } else if (List.class.isAssignableFrom(field.getType())) {
@@ -48,7 +46,7 @@ public class WebFieldDecorator extends DefaultFieldDecorator {
                     type = ((ParameterizedType) listType)
                             .getActualTypeArguments()[0];
 
-                    return proxyForEasWebListLocator(
+                    return proxyForListLocator(
                             (Class<? extends AbstractPageElement>) type,
                             loader, locator, field.getName(), getPage(field));
                 }
@@ -57,28 +55,27 @@ public class WebFieldDecorator extends DefaultFieldDecorator {
         }
 
         return super.decorate(loader, field);
-
     }
 
-    protected List<?> proxyForEasWebListLocator(
-            Class<? extends AbstractPageElement> type, ClassLoader loader,
-            ElementLocator locator, String name, String pageName) {
-        InvocationHandler handler = new LocatingEasyWebListHandler(type,
-                locator, name, pageName);
+    protected List<?> proxyForListLocator(
+            Class<? extends AbstractPageElement> type,
+            ClassLoader loader, ElementLocator locator,
+            String name, String pageName) {
+
+        InvocationHandler handler = new LocatingEasyWebListHandler(type, locator, name, pageName);
         List<?> proxy;
-        proxy = (List<?>) Proxy.newProxyInstance(loader,
-                new Class[]{List.class}, handler);
+        proxy = (List<?>) Proxy.newProxyInstance(loader, new Class[]{List.class}, handler);
         return proxy;
     }
 
     private String getName(Field field) {
-        return field.isAnnotationPresent(Description.class) ? field
-                .getAnnotation(Description.class).name() : field.getName();
+        return field.isAnnotationPresent(Description.class)
+                ? field.getAnnotation(Description.class).name() : field.getName();
     }
 
     private String getPage(Field field) {
-        return field.getDeclaringClass().isAnnotationPresent(Page.class) ? field
-                .getDeclaringClass().getAnnotation(Page.class).title()
+        return field.getDeclaringClass().isAnnotationPresent(Page.class)
+                ? field.getDeclaringClass().getAnnotation(Page.class).title()
                 : "PAGE NOT DEFINED!!!";
     }
 
