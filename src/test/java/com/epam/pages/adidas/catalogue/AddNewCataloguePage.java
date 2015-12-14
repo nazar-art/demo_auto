@@ -9,7 +9,6 @@ import com.epam.core.driver.Driver;
 import com.epam.core.logging.Logger;
 import com.epam.core.utils.CalendarUtils;
 import com.epam.core.utils.ElementUtils;
-import com.epam.model.dto.CatalogueManagementDTO;
 import com.epam.pages.PageObject;
 import com.epam.pages.adidas.WelcomePage;
 import org.openqa.selenium.By;
@@ -69,20 +68,22 @@ public class AddNewCataloguePage extends WelcomePage {
     private Button btnSave;
 
 
-    public AddNewCataloguePage fillNewCatalogueForm(CatalogueManagementDTO managementDTO, String introDate, String exitDate) {
-        setShortName(managementDTO);
-        setLongName(managementDTO);
+    public AddNewCataloguePage fillNewCatalogueForm(String catalogueShortName,
+                                                    String catalogueLongName, String confSet, String confDesc,
+                                                    String exitDate, String introDate) {
+        setShortName(catalogueShortName);
+        setLongName(catalogueLongName);
 
         CalendarUtils.setDate(inputIntroDate, introDate);
         CalendarUtils.setDate(inputExitDate, exitDate);
 
-        setConfigurationSet(managementDTO.getConfigurationSet());
-        setDescription(managementDTO);
+        setConfigurationSet(confSet);
+        setDescription(confDesc);
         return this;
     }
 
-    public AddNewCataloguePage setDescription(CatalogueManagementDTO managementDTO) {
-        inputDescription.sendText(managementDTO.getDescription());
+    public AddNewCataloguePage setDescription(String catalogueDesc) {
+        inputDescription.sendText(catalogueDesc);
         return this;
     }
 
@@ -96,13 +97,13 @@ public class AddNewCataloguePage extends WelcomePage {
         return this;
     }
 
-    public AddNewCataloguePage setLongName(CatalogueManagementDTO managementDTO) {
-        inputLongName.sendText(managementDTO.getLongName());
+    public AddNewCataloguePage setLongName(String catalogueLongName) {
+        inputLongName.sendText(catalogueLongName);
         return this;
     }
 
-    public AddNewCataloguePage setShortName(CatalogueManagementDTO managementDTO) {
-        inputShortName.sendText(managementDTO.getShortName());
+    public AddNewCataloguePage setShortName(String catalogueShortName) {
+        inputShortName.sendText(catalogueShortName);
         return this;
     }
 

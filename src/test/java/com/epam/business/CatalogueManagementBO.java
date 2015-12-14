@@ -5,6 +5,7 @@ import com.epam.core.utils.CalendarUtils;
 import com.epam.model.dto.CatalogueManagementDTO;
 import com.epam.pages.adidas.catalogue.CatalogueManagementPage;
 import com.epam.pages.adidas.catalogue.CatalogueViewPage;
+import org.apache.commons.lang.RandomStringUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,14 +14,18 @@ public class CatalogueManagementBO extends BaseBO {
 
     public static final int INTRO_DATE_DAYS_DIFFERENCE = 4;
     public static final int EXIT_DATE_DAYS_DIFFERENCE = 10;
+    public static final String SEPARATOR = "_";
+    public static final int UPDATE_INDEX = 3;
 
     public boolean isCatalogueManagementPageOpen(CatalogueManagementDTO managementDTO) {
         CatalogueManagementPage managementPage = openCatalogueManagementPage(managementDTO);
         return managementPage.exist();
     }
 
-    public boolean isNewCatalogueCanceled(CatalogueManagementDTO managementDTO) {
-        CatalogueManagementPage managementPage = openCatalogueManagementPage(managementDTO);
+    public boolean isNewCatalogueCanceled(CatalogueManagementDTO dto) {
+        CatalogueManagementPage managementPage = openCatalogueManagementPage(dto);
+
+        makeNamesUnique(UPDATE_INDEX, dto);
 
         LocalDate today = LocalDate.now();
         LocalDate introDate = today.plusDays(4);
@@ -33,13 +38,28 @@ public class CatalogueManagementBO extends BaseBO {
         Logger.logInfo("Intro date: " + formattedIntroDate);
         Logger.logInfo("Exit date: " + formattedExitDate);
 
-        return managementPage.clickNewCatalogueBtn()
-                .fillNewCatalogueForm(managementDTO, formattedIntroDate, formattedExitDate)
+        return managementPage
+                .clickNewCatalogueBtn()
+                .fillNewCatalogueForm(dto.getShortName(), dto.getLongName(),
+                        dto.getConfigurationSet(), dto.getDescription(),
+                        formattedExitDate, formattedIntroDate)
                 .clickCancelButton()
-                .verifyThatCatalogueIsNotCreated(managementDTO.getShortName());
+                .verifyThatCatalogueIsNotCreated(dto.getShortName());
     }
 
-    public boolean isNewCatalogueAdded(CatalogueManagementDTO managementDTO) {
+    private void makeNamesUnique(int uniqueIndex, CatalogueManagementDTO dto) {
+        String value = RandomStringUtils.randomNumeric(uniqueIndex);
+
+        String updatedShortName = dto.getShortName() + SEPARATOR + value;
+        String updatedLongName = dto.getLongName() + SEPARATOR + value;
+
+        dto.setShortName(updatedShortName);
+        dto.setLongName(updatedLongName);
+    }
+
+    public boolean isNewCatalogueAdded(CatalogueManagementDTO dto) {
+        makeNamesUnique(UPDATE_INDEX, dto);
+
         LocalDate today = LocalDate.now();
         LocalDate introDate = today.plusDays(INTRO_DATE_DAYS_DIFFERENCE);
         LocalDate exitDate = today.plusDays(EXIT_DATE_DAYS_DIFFERENCE);
@@ -52,14 +72,16 @@ public class CatalogueManagementBO extends BaseBO {
         Logger.logInfo("Exit date: " + formattedExitDate);
 
         boolean catalogCreationResult = new CatalogueManagementPage().clickNewCatalogueBtn()
-                .fillNewCatalogueForm(managementDTO, formattedIntroDate, formattedExitDate)
+                .fillNewCatalogueForm(dto.getShortName(), dto.getLongName(),
+                        dto.getConfigurationSet(), dto.getDescription(),
+                        formattedExitDate, formattedIntroDate)
                 .clickSaveButton()
                 .isCatalogReallyNew();
 
         return catalogCreationResult
                 && new CatalogueViewPage()
                 .returnToCataloguesPage()
-                .verifyThatCatalogueIsCreated(managementDTO.getShortName());
+                .verifyThatCatalogueIsCreated(dto.getShortName());
 
     }
 
