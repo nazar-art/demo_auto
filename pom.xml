@@ -4,11 +4,11 @@
           http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.epam</groupId>
-    <artifactId>adidas_auto</artifactId>
+    <groupId>net.lelyak</groupId>
+    <artifactId>lelyak-demo-stub</artifactId>
     <packaging>jar</packaging>
 
-    <name>adidas_auto</name>
+    <name>lelyak_demo_stub</name>
     <version>0.0.1</version>
 
     <properties>
@@ -17,36 +17,36 @@
 
         <java.version>1.8</java.version>
         <spring.version>4.2.2.RELEASE</spring.version>
-        <selenium-remote-driver>2.48.2</selenium-remote-driver>
+        <selenium-remote-driver>3.7.0</selenium-remote-driver>
         <reportportal-client.version>2.1.12</reportportal-client.version>
 
         <wd.threadCount>1</wd.threadCount>
         <wd.parallel>methods</wd.parallel>
     </properties>
 
-    <repositories>
+    <!--<repositories>
         <repository>
-            <id>artifactory.epam.com</id>
-            <name>artifactory.epam.com-releases</name>
+            <id>artifactory.lelyak.com</id>
+            <name>artifactory.lelyak.com-releases</name>
             <url>http://artifactory.epam.com/artifactory/EPMC-TST</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-    </repositories>
+    </repositories>-->
 
     <dependencies>
         <!--TESTING-->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.9.9</version>
+            <version>6.11</version>
         </dependency>
 
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>2.48.2</version>
+            <version>${selenium-remote-driver}</version>
             <exclusions>
                 <exclusion>
                     <groupId>xalan</groupId>
@@ -70,7 +70,7 @@
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>3.2.0</version>
+            <version>5.0.4</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.seleniumhq.selenium</groupId>
@@ -132,7 +132,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.1.3</version>
+            <version>1.2.3</version>
         </dependency>
 
         <!--REPORTING-->
@@ -151,7 +151,7 @@
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <version>4.0</version>
+            <version>4.1.0</version>
             <exclusions>
                 <exclusion>
                     <artifactId>guava</artifactId>
@@ -248,7 +248,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>18.0</version>
+            <version>23.0</version>
         </dependency>
 
         <dependency>
@@ -274,7 +274,7 @@
         <!--REPORT PORTAL-->
         <!--todo uncomment when RP will be ready for usage-->
         <!--<dependency>
-            <groupId>com.epam.ta.reportportal</groupId>
+            <groupId>com.lelyakak.ta.reportportal</groupId>
             <artifactId>reportportal-client</artifactId>
             <version>${reportportal-client.version}</version>
             <exclusions>
@@ -286,7 +286,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.epam.ta.reportportal</groupId>
+            <groupId>com.lelyakak.ta.reportportal</groupId>
             <artifactId>reportportal-client-core</artifactId>
             <version>${reportportal-client.version}</version>
             <exclusions>
@@ -298,27 +298,27 @@
         </dependency>
 
         <dependency>
-            <groupId>com.epam.ta.reportportal</groupId>
+            <groupId>com.lelyakak.ta.reportportal</groupId>
             <artifactId>reportportal-model</artifactId>
             <version>${reportportal-client.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.epam.ta.reportportal</groupId>
+            <groupId>com.lelyakak.ta.reportportal</groupId>
             <artifactId>reportportal-logback-integration</artifactId>
             <version>2.1.7</version>
             <exclusions>
                 <exclusion>
                     <artifactId>reportportal-client-core</artifactId>
-                    <groupId>com.epam.ta.reportportal</groupId>
+                    <groupId>com.lelyakak.ta.reportportal</groupId>
                 </exclusion>
                 <exclusion>
                     <artifactId>reportportal-model</artifactId>
-                    <groupId>com.epam.ta.reportportal</groupId>
+                    <groupId>com.lelyakak.ta.reportportal</groupId>
                 </exclusion>
                 <exclusion>
                     <artifactId>reportportal-client</artifactId>
-                    <groupId>com.epam.ta.reportportal</groupId>
+                    <groupId>com.lelyakak.ta.reportportal</groupId>
                 </exclusion>
             </exclusions>
         </dependency>-->
@@ -332,7 +332,7 @@
             <!-- ********* maven-failsafe-plugin ******** -->
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.16</version>
+                <version>2.20.1</version>
 
                 <configuration>
                     <encoding>UTF-8</encoding>
@@ -383,7 +383,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.7.0</version>
                 <inherited>true</inherited>
                 <configuration>
                     <source>${java.version}</source>
@@ -434,7 +434,8 @@
             <properties>
                 <driver>ff</driver>
                 <suite.pattern>**/*ITCase.java</suite.pattern>
-                <host.for.test>https://qahint.crplatform.net/command-centre/auth</host.for.test>
+                <!--<host.for.test>https://qahint.crplatform.net/command-centre/auth</host.for.test>-->
+                <host.for.test>http://parabank.parasoft.com</host.for.test>
             </properties>
         </profile>
 
@@ -452,5 +453,11 @@
             </properties>
         </profile>
 
+        <profile>
+            <id>bank</id>
+            <properties>
+                <suite.pattern>net.lelyak.edu.tests.impl.bank*ITCase.java</suite.pattern>
+            </properties>
+        </profile>
     </profiles>
 </project>

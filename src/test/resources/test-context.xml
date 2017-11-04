@@ -12,11 +12,11 @@
     <context:annotation-config />
 
     <!--DAO LAYER-->
-    <bean class="com.epam.model.dao.modules.DAOFactory" id="daoFactory"/>
+    <bean class="net.lelyak.model.dao.modules.DAOFactory" id="daoFactory"/>
 
-    <bean class="com.epam.model.dao.modules.catalogue.CatalogueManagementDAO" id="catalogueManagementDAO"/>
+    <bean class="net.lelyak.model.dao.modules.catalogue.CatalogueManagementDAO" id="catalogueManagementDAO"/>
 
 
     <!--todo remove later - this is first test stub-->
-    <bean id="adminDao" class="com.epam.model.dao.modules.admin.AdminDAO"/>
+    <bean id="adminDao" class="net.lelyak.model.dao.modules.admin.AdminDAO"/>
 </beans>

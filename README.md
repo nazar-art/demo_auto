@@ -1,5 +1,5 @@
-### Automatization framework for Adidas Command Centre 
+### Automatization framework demo 
 
 #### For running tests use Maven command (at the project folder):
 
-    clean install -Pall
+    mvn clean install -Pall
