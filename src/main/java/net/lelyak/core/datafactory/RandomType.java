@@ -1,7 +1,6 @@
 package net.lelyak.core.datafactory;
 
 public enum RandomType {
-
     NUMERIC,
     STRING,
     ADDRESS,
