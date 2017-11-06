@@ -1,4 +1,4 @@
-package net.lelyak.tests.abibas.modules.catalogue;
+package net.lelyak.tests.impl.abibas.modules.catalogue;
 
 import net.lelyak.business.CatalogueManagementBO;
 import net.lelyak.dp.modules.CatalogueManagementDP;
