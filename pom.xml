@@ -135,6 +135,13 @@
             <version>1.2.3</version>
         </dependency>
 
+        <!--LOGGING Second variant -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
         <!--REPORTING-->
         <dependency>
             <groupId>org.uncommons</groupId>
