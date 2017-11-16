@@ -1,4 +1,4 @@
-package net.lelyak.tests.abibas;
+package net.lelyak.tests.impl.abibas;
 
 import net.lelyak.business.AdminBO;
 import net.lelyak.dp.impl.AdminDP;

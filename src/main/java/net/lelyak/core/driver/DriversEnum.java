@@ -1,5 +1,8 @@
 package net.lelyak.core.driver;
 
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.FirefoxDriverManager;
+import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
 import net.lelyak.core.logging.Logger;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -24,6 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -32,8 +36,7 @@ public enum DriversEnum {
     FF {
         @Override
         public RemoteWebDriver getDriver() {
-
-            setGeckoDriver();
+            FirefoxDriverManager.getInstance().setup();
 
             DesiredCapabilities capabilities = DesiredCapabilities.firefox();
             FirefoxProfile firefoxProfile = new FirefoxProfile();
@@ -44,27 +47,11 @@ public enum DriversEnum {
             firefoxProfile.setPreference("browser.download.folderList", 2);
             firefoxProfile.setPreference("intl.accept_languages", "en-US");
             firefoxProfile.setPreference("browser.download.manager.showWhenStarting", false);
-            firefoxProfile.setPreference("browser.download.dir", "D:\\");
+//            firefoxProfile.setPreference("browser.download.dir", "D:\\");
             firefoxProfile.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/csv, application/pdf");
 
             capabilities.setCapability(FirefoxDriver.PROFILE, firefoxProfile);
             return new FirefoxDriver(capabilities);
-        }
-
-        private void setGeckoDriver() {
-            if (System.getenv().get("OS").contains("Mac")) {
-                // todo set the same logic for Mac
-                System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
-
-            } else if (System.getenv().get("OS").contains("Windows")) {
-                realSetGeckoDriver("3rdParty\\geckodriver\\geckodriver.exe");
-            }
-        }
-
-        private void realSetGeckoDriver(String relativePath) {
-            Path path = FileSystems.getDefault().getPath(relativePath).toAbsolutePath();
-            System.setProperty("webdriver.gecko.driver", path.toString());
-            Logger.logDebug("Set Geckodriver with path:" + path);
         }
     },
 
@@ -138,26 +125,13 @@ public enum DriversEnum {
     CHROME {
         @Override
         public RemoteWebDriver getDriver() {
-            /*String path = DriversEnum.class.getClassLoader()
-                    .getResource("3rdParty/chrome/chromedriver.exe").getPath();
-            System.setProperty("webdriver.chrome.driver", path);*/
+            ChromeDriverManager.getInstance().setup();
 
-            File chromeFile = new File(Config.getProperty(Config.CHROME_PATH));
-            System.setProperty("webdriver.chrome.driver", chromeFile.getAbsolutePath());
-
-            ChromeDriverService service = new ChromeDriverService.Builder()
-                    .usingDriverExecutable(chromeFile)
-                    .usingAnyFreePort().build();
-            Driver.chromeService.set(service);
-            try {
-                service.start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--no-sandbox");
             DesiredCapabilities capabilities = DesiredCapabilities.chrome();
             capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+
             return new ChromeDriver(capabilities);
         }
     },
@@ -165,11 +139,13 @@ public enum DriversEnum {
     IE {
         @Override
         public RemoteWebDriver getDriver() {
-            File ieFile = new File(Config.getProperty(Config.IE_PATH));
-            System.setProperty("webdriver.ie.driver", ieFile.getAbsolutePath());
+            InternetExplorerDriverManager.getInstance().setup();
+
+//            File ieFile = new File(Config.getProperty(Config.IE_PATH));
+//            System.setProperty("webdriver.ie.driver", ieFile.getAbsolutePath());
 
             DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
-            capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
+            capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
             capabilities.setJavascriptEnabled(true);
             capabilities.setCapability("unexpectedAlertBehaviour", "accept");
             capabilities.setCapability("ignoreProtectedModeSettings", true);
